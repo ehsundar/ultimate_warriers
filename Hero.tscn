@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://HeroBody.gd" type="Script" id=1]
 [ext_resource path="res://Texture/asset_hero_attack.png" type="Texture" id=2]
@@ -8,11 +8,12 @@
 [ext_resource path="res://Texture/asset_hero_ladder_2.png" type="Texture" id=6]
 [ext_resource path="res://Texture/asset_hero_jump_up.png" type="Texture" id=7]
 [ext_resource path="res://Texture/asset_hero_jump_down.png" type="Texture" id=8]
+[ext_resource path="res://Texture/asset_hero_dead.png" type="Texture" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 14.6613, 21.9641 )
+extents = Vector2( 14.6613, 15 )
 
 [sub_resource type="SpriteFrames" id=2]
 
@@ -30,7 +31,7 @@ animations = [ {
 "frames": [ ExtResource( 5 ), ExtResource( 6 ) ],
 "loop": true,
 "name": "ladder",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
@@ -45,6 +46,11 @@ animations = [ {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
 "name": "jump_down",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ) ],
+"loop": false,
+"name": "dead",
 "speed": 5.0
 } ]
 
@@ -65,6 +71,7 @@ run_speed = 200
 jump_speed = 400
 gravity = 1200
 reload_duration = 1500
+ladder_speed = 200
 
 [node name="Camera2D" type="Camera2D" parent="HeroBody" index="0"]
 
@@ -72,10 +79,10 @@ anchor_mode = 1
 rotating = false
 current = true
 zoom = Vector2( 0.7, 0.7 )
-limit_left = 0
+limit_left = 60
 limit_top = 0
-limit_right = 10000000
-limit_bottom = 10000000
+limit_right = 1410
+limit_bottom = 480
 limit_smoothed = false
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true

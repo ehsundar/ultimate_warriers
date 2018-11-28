@@ -5,12 +5,12 @@
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
 custom_solver_bias = 0.0
-points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
+points = PoolVector2Array( -5, -15, 5, -15, 5, -10, -5, -10 )
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 
 custom_solver_bias = 0.0
-points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
+points = PoolVector2Array( -5, -15, 5, -15, 5, -10, -5, -10 )
 
 [sub_resource type="ConvexPolygonShape2D" id=3]
 
@@ -25,12 +25,12 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 [sub_resource type="ConvexPolygonShape2D" id=5]
 
 custom_solver_bias = 0.0
-points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
+points = PoolVector2Array( -5, -15, 5, -15, 5, -10, -5, -10 )
 
 [sub_resource type="ConvexPolygonShape2D" id=6]
 
 custom_solver_bias = 0.0
-points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
+points = PoolVector2Array( -5, -15, 5, -15, 5, -10, -5, -10 )
 
 [resource]
 

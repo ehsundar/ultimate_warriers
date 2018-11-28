@@ -10,10 +10,10 @@ var total_movement = 0
 func start(pos, dir):
 	if dir == "left":
 		velocity = Vector2(-1 * speed, 0)
-		pos += Vector2(-20, 0)
+		pos += Vector2(-26, 0)
 	if dir == "right":
 		velocity = Vector2(1 * speed, 0)
-		pos += Vector2(20, 0)
+		pos += Vector2(26, 0)
 		
 	position = pos
 	direction = dir
