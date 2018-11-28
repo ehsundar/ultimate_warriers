@@ -1,0 +1,258 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Texture/95983.png" type="Texture" id=1]
+
+[node name="Tileset" type="Node2D"]
+
+[node name="GrassFloorFront" type="Sprite" parent="." index="0"]
+
+editor/display_folded = true
+position = Vector2( 55, 20 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 36, 10, 30, 30 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody2D" type="StaticBody2D" parent="GrassFloorFront" index="0"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="GrassFloorFront/StaticBody2D" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
+
+[node name="GrassFloorLadder" type="Sprite" parent="." index="1"]
+
+editor/display_folded = true
+position = Vector2( 125, 20 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 174, 82, 30, 30 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody2D" type="StaticBody2D" parent="GrassFloorLadder" index="0"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="GrassFloorLadder/StaticBody2D" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
+
+[node name="GrassFloorLeft" type="Sprite" parent="." index="2"]
+
+editor/display_folded = true
+position = Vector2( 20, 20 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 5, 10, 30, 30 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody2D" type="StaticBody2D" parent="GrassFloorLeft" index="0"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="GrassFloorLeft/StaticBody2D" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
+
+[node name="GrassFloorRight" type="Sprite" parent="." index="3"]
+
+editor/display_folded = true
+position = Vector2( 90, 20 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 67, 10, 30, 30 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody2D" type="StaticBody2D" parent="GrassFloorRight" index="0"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="GrassFloorRight/StaticBody2D" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
+
+[node name="GrassWallFront" type="Sprite" parent="." index="4"]
+
+position = Vector2( 55, 55 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 36, 43, 30, 30 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="GrassWallLeft" type="Sprite" parent="." index="5"]
+
+position = Vector2( 20, 55 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 5, 43, 30, 30 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="GrassWallRight" type="Sprite" parent="." index="6"]
+
+position = Vector2( 90, 55 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 66, 43, 30, 30 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="GrassCaveLeft" type="Sprite" parent="." index="7"]
+
+position = Vector2( 20, 90 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 103, 10, 30, 30 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="GrassCaveRight" type="Sprite" parent="." index="8"]
+
+position = Vector2( 55, 90 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 134, 10, 30, 30 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="GrassWallJunk1" type="Sprite" parent="." index="9"]
+
+position = Vector2( 20, 125 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 103, 43, 30, 30 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="GrassWallJunk2" type="Sprite" parent="." index="10"]
+
+position = Vector2( 55, 125 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 134, 43, 30, 30 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sky" type="Sprite" parent="." index="11"]
+
+position = Vector2( 30, 185 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 174, 10, 30, 30 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Ladder" type="Sprite" parent="." index="12"]
+
+position = Vector2( 235, 185 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 244, 10, 30, 31.5 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Coin" type="Sprite" parent="." index="13"]
+
+position = Vector2( 190, 185 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 279, 12, 30, 30 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="SkyCloud" type="Sprite" parent="." index="14"]
+
+position = Vector2( 65, 185 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 209, 10, 30, 30 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ChestClose" type="Sprite" parent="." index="15"]
+
+position = Vector2( 100, 185 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 174, 52, 30, 28 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ChestOpen" type="Sprite" parent="." index="16"]
+
+position = Vector2( 140, 185 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 209, 48, 36, 32 )
+_sections_unfolded = [ "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+
