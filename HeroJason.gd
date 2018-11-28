@@ -19,6 +19,10 @@ var last_shoot = 0
 var last_update = 0
 
 
+func _ready():
+	position += Vector2(20, 100)
+
+
 func get_input():
 	velocity.x = 0
 	var right = Input.is_action_pressed('ui_right')
