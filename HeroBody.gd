@@ -100,9 +100,9 @@ func shoot():
 	get_parent().add_child(bullet)
 
 func hit(damage):
-	print("damage %s")
+	print("damage ", damage)
 	health -= damage
-	if health < 0:
+	if health <= 0:
 		queue_free()
 	update()
 

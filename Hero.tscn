@@ -48,7 +48,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="Hero" type="Node2D" index="0"]
+[node name="Hero" type="Node2D"]
 
 __meta__ = {
 "_edit_group_": true

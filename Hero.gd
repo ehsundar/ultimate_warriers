@@ -1,8 +1,9 @@
-extends Sprite
+extends Node2D
 
 # class member variables go here, for example:
 # var a = 2
 # var b = "textvar"
+export var inLadder = false
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
@@ -14,5 +15,14 @@ func _ready():
 #	# Update game logic here.
 #	pass
 
-func hit(damage):
-	pass
+
+func _on_Ladder_body_entered(body):
+	if body == $HeroBody:
+		inLadder = true
+		print(inLadder)
+
+
+func _on_Ladder_body_exited(body):
+	if body == $HeroBody:
+		inLadder = false
+		print(inLadder)

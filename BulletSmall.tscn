@@ -15,9 +15,10 @@ collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
+_sections_unfolded = [ "Collision", "collision" ]
 damage = 20
 speed = 500
-max_range = 400
+max_range = 300
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
