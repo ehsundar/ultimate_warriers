@@ -9,7 +9,7 @@ export var on_top_ladder = false;
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
-	$HeroBody.position += Vector2(100, 100)
+	pass
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.

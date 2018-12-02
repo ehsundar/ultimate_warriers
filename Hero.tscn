@@ -72,6 +72,7 @@ jump_speed = 400
 gravity = 1200
 reload_duration = 1500
 ladder_speed = 200
+spawn_position = Vector2( 100, 100 )
 
 [node name="Camera2D" type="Camera2D" parent="HeroBody" index="0"]
 
@@ -108,5 +109,14 @@ shape = SubResource( 1 )
 frames = SubResource( 2 )
 animation = "stand"
 playing = true
+
+[node name="RespawnTimer" type="Timer" parent="HeroBody" index="3"]
+
+process_mode = 1
+wait_time = 5.0
+one_shot = false
+autostart = false
+
+[connection signal="timeout" from="HeroBody/RespawnTimer" to="HeroBody" method="spawn"]
 
 

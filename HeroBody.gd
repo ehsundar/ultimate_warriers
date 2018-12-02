@@ -5,6 +5,7 @@ export (int) var jump_speed = 400
 export (int) var gravity = 1200
 export (int) var reload_duration = 1500
 export (int) var ladder_speed = 200
+export (Vector2) var spawn_position = Vector2(100, 100)
 
 var BulletSmall = preload("BulletSmall.tscn")
 var BulletMedium = preload("BulletMedium.tscn")
@@ -19,10 +20,11 @@ var head = "right"
 var current_state = "stand"
 var last_shoot = 0
 var last_update = 0
+var hero_killed = true
 
 
 func _ready():
-	position += Vector2(20, 100)
+	spawn()
 
 
 func _process(delta):
@@ -125,7 +127,10 @@ func _physics_process(delta):
 		
 		if select:
 			shoot()
-			
+	else:
+		# health negative
+		kill()		
+	
 	update_state()
 
 
@@ -175,7 +180,7 @@ func hit(damage):
 	print("damage ", damage)
 	health -= damage
 	if health <= 0:
-		health = 0
+		kill()
 	update()
 
 
@@ -195,7 +200,19 @@ func _draw():
 
 
 func kill():
+	if hero_killed:
+		return
+	hero_killed = true
 	health = 0
+	$RespawnTimer.start()
+	
+	
+func spawn():
+	if not hero_killed:
+		return
+	hero_killed = false
+	global_position = spawn_position
+	health = 100
 
 
 func upgrade_weapon(level=1, absolute=false):
