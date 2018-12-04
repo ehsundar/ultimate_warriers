@@ -24,6 +24,7 @@ var hero_killed = true
 
 var on_ladder_bottom = false;
 var on_ladder_top = false;
+var delegated_movement = false;
 
 
 func _ready():
@@ -45,6 +46,9 @@ func _physics_process(delta):
 	if health > 0:
 		
 		velocity.x = 0
+		
+		if delegated_movement:
+			return
 		
 		var on_bottom = on_ladder_bottom
 		var on_top = on_ladder_top
@@ -179,6 +183,7 @@ func shoot():
 	bullet.start(position, head)
 	get_parent().add_child(bullet)
 
+
 func hit(damage):
 	print("damage ", damage)
 	health -= damage
@@ -208,8 +213,8 @@ func kill():
 	hero_killed = true
 	health = 0
 	$RespawnTimer.start()
-	
-	
+
+
 func spawn():
 	if not hero_killed:
 		return
@@ -239,12 +244,16 @@ func upgrade_weapon(level=1, absolute=false):
 		if CurrentBullet == BulletLarge:
 			return
 		CurrentBullet = BulletSmall
-	
+
 
 func set_on_ladder_bottom(value):
 	on_ladder_bottom = value
-	
+
 
 func set_on_ladder_top(value):
 	on_ladder_top = value
+
+
+func set_delegated_movement(value):
+	delegated_movement = value
 
