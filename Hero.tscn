@@ -54,7 +54,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="Hero" type="Node2D"]
+[node name="Hero" type="Node2D" index="0"]
 
 __meta__ = {
 "_edit_group_": true
@@ -71,7 +71,6 @@ run_speed = 200
 jump_speed = 400
 gravity = 1200
 reload_duration = 1500
-ladder_speed = 200
 spawn_position = Vector2( 100, 100 )
 
 [node name="Camera2D" type="Camera2D" parent="HeroBody" index="0"]

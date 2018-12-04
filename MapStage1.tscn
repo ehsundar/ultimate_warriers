@@ -371,7 +371,7 @@ extents = Vector2( 10, 3.2 )
 custom_solver_bias = 0.0
 extents = Vector2( 5, 5 )
 
-[node name="Stage1" type="Node2D" index="0"]
+[node name="Stage1" type="Node2D"]
 
 _sections_unfolded = [ "Transform" ]
 
@@ -485,6 +485,7 @@ ladder_name = ""
 
 [node name="Ladder" type="Area2D" parent="Ladder1" index="0"]
 
+editor/display_folded = true
 position = Vector2( 285, 310 )
 scale = Vector2( 0.5, 1.5625 )
 input_pickable = true
@@ -527,6 +528,7 @@ shape = SubResource( 16 )
 
 [node name="LadderBtm" type="Area2D" parent="Ladder1" index="2"]
 
+editor/display_folded = true
 position = Vector2( 285, 355 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )

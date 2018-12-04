@@ -10,10 +10,7 @@ func _process(delta):
 
 
 func _on_Ladder_proximity(ladder_id, body, is_bottom, is_enter):
-	if is_bottom:
-		body.set_on_ladder_bottom(is_enter)
-	else:
-		body.set_on_ladder_top(is_enter)
+	pass
 
 
 func _on_LowerBound_body_entered(body):

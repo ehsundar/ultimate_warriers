@@ -17,10 +17,9 @@ config/icon="res://game_icon.png"
 [display]
 
 window/size/width=600
-window/size/resizable=false
-window/size/always_on_top=true
 window/handheld/orientation="portrait"
 window/stretch/aspect="keep"
+window/stretch/shrink="1"
 
 [input]
 
