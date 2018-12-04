@@ -3,13 +3,13 @@ extends KinematicBody2D
 export (int) var run_speed = 200
 export (int) var jump_speed = 400
 export (int) var gravity = 1200
-export (int) var reload_duration = 1500
 export (Vector2) var spawn_position = Vector2(100, 100)
 
 var BulletSmall = preload("BulletSmall.tscn")
 var BulletMedium = preload("BulletMedium.tscn")
 var BulletLarge = preload("BulletLarge.tscn")
 var CurrentBullet = BulletSmall
+var reload_duration = 1000
 
 var velocity = Vector2()
 var jumping = false
@@ -115,6 +115,7 @@ func shoot():
 	var bullet = CurrentBullet.instance()
 	bullet.start(position, head)
 	get_parent().add_child(bullet)
+	reload_duration = bullet.reload_duration
 
 
 func hit(damage):
@@ -131,6 +132,7 @@ func _draw():
 	var draw_bar_y = -30
 	draw_rect(Rect2(draw_bar_x, draw_bar_y, 30, 3), Color(1.0, 0.0, 0.0), false)
 	draw_rect(Rect2(draw_bar_x, draw_bar_y, health * 3 / 10, 3), Color(1.0, 0.0, 0.0), true)
+	
 	
 	var time_rem = (OS.get_ticks_msec() - last_shoot) * 30 / reload_duration
 	if time_rem > 30:

@@ -1,8 +1,9 @@
 extends KinematicBody2D
 
-export var damage = 20
-export var speed = 750
-export var max_range = 400
+export (int) var damage = 20
+export (int) var speed = 750
+export (int) var max_range = 400
+export (int) var reload_duration = 1000
 var velocity = Vector2()
 var direction = ""
 var total_movement = 0

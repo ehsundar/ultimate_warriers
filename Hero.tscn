@@ -54,7 +54,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="Hero" type="Node2D" index="0"]
+[node name="Hero" type="Node2D"]
 
 __meta__ = {
 "_edit_group_": true
@@ -70,7 +70,6 @@ script = ExtResource( 1 )
 run_speed = 200
 jump_speed = 400
 gravity = 1200
-reload_duration = 1500
 spawn_position = Vector2( 100, 100 )
 
 [node name="Camera2D" type="Camera2D" parent="HeroBody" index="0"]
@@ -78,8 +77,8 @@ spawn_position = Vector2( 100, 100 )
 anchor_mode = 1
 rotating = false
 current = true
-zoom = Vector2( 0.7, 0.7 )
-limit_left = 60
+zoom = Vector2( 0.5, 0.5 )
+limit_left = 0
 limit_top = 0
 limit_right = 1410
 limit_bottom = 480
@@ -95,9 +94,9 @@ drag_margin_top = 0.2
 drag_margin_right = 0.1
 drag_margin_bottom = 0.2
 editor_draw_screen = true
-editor_draw_limits = false
-editor_draw_drag_margin = false
-_sections_unfolded = [ "Drag Margin", "Limit", "Offset", "Smoothing", "Transform" ]
+editor_draw_limits = true
+editor_draw_drag_margin = true
+_sections_unfolded = [ "Drag Margin", "Editor", "Limit", "Offset", "Smoothing", "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HeroBody" index="1"]
 

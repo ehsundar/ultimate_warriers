@@ -18,6 +18,7 @@ script = ExtResource( 1 )
 damage = 45
 speed = 750
 max_range = 600
+reload_duration = 2000
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 

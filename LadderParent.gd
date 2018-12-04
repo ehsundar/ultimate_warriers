@@ -9,7 +9,12 @@ var hero_on_top = null;
 
 
 func _ready():
-	pass
+	$Ladder.connect("body_entered", self, "_on_Ladder_body_entered")
+	$Ladder.connect("body_exited", self, "_on_Ladder_body_exited")
+	$LadderTop.connect("body_entered", self, "_on_LadderTop_body_entered")
+	$LadderTop.connect("body_exited", self, "_on_LadderTop_body_exited")
+	$LadderBtm.connect("body_entered", self, "_on_LadderBtm_body_entered")
+	$LadderBtm.connect("body_exited", self, "_on_LadderBtm_body_exited")
 
 
 func _process(delta):
