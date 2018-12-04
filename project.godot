@@ -42,6 +42,14 @@ ui_down=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"
  ]
 cheat_upgrade_weapon=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":49,"unicode":0,"echo":false,"script":null)
  ]
+ui_secondary_left=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":74,"unicode":0,"echo":false,"script":null)
+ ]
+ui_secondary_right=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":76,"unicode":0,"echo":false,"script":null)
+ ]
+ui_secodary_down=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":75,"unicode":0,"echo":false,"script":null)
+ ]
+ui_secondary_up=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":73,"unicode":0,"echo":false,"script":null)
+ ]
 
 [rendering]
 

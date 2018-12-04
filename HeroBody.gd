@@ -22,6 +22,9 @@ var last_shoot = 0
 var last_update = 0
 var hero_killed = true
 
+var on_ladder_bottom = false;
+var on_ladder_top = false;
+
 
 func _ready():
 	spawn()
@@ -43,8 +46,8 @@ func _physics_process(delta):
 		
 		velocity.x = 0
 		
-		var on_bottom = get_parent().on_bottom_ladder
-		var on_top = get_parent().on_top_ladder
+		var on_bottom = on_ladder_bottom
+		var on_top = on_ladder_top
 	
 		var right = Input.is_action_pressed('ui_right')
 		var left = Input.is_action_pressed('ui_left')
@@ -237,4 +240,11 @@ func upgrade_weapon(level=1, absolute=false):
 			return
 		CurrentBullet = BulletSmall
 	
+
+func set_on_ladder_bottom(value):
+	on_ladder_bottom = value
 	
+
+func set_on_ladder_top(value):
+	on_ladder_top = value
+
