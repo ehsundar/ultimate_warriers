@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://tiles_primitives.tres" type="TileSet" id=1]
 [ext_resource path="res://Texture/95983.png" type="Texture" id=2]
@@ -6,7 +6,7 @@
 [ext_resource path="res://Heros.gd" type="Script" id=4]
 [ext_resource path="res://HeroBody.tscn" type="PackedScene" id=5]
 [ext_resource path="res://LadderParent.gd" type="Script" id=6]
-[ext_resource path="res://Area2D.gd" type="Script" id=7]
+[ext_resource path="res://Cave.tscn" type="PackedScene" id=7]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -377,11 +377,6 @@ extents = Vector2( 5, 5 )
 custom_solver_bias = 0.0
 extents = Vector2( 10, 54.3683 )
 
-[sub_resource type="RectangleShape2D" id=19]
-
-custom_solver_bias = 0.0
-extents = Vector2( 30, 30 )
-
 [node name="Stage1" type="Node2D" index="0"]
 
 _sections_unfolded = [ "Transform" ]
@@ -636,24 +631,9 @@ __meta__ = {
 
 shape = SubResource( 17 )
 
-[node name="Cave1" type="Node2D" parent="." index="7"]
+[node name="Cave" parent="." index="7" instance=ExtResource( 7 )]
 
 position = Vector2( 720, 210 )
-
-[node name="Area2D" type="Area2D" parent="Cave1" index="0"]
-
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
-script = ExtResource( 7 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Cave1/Area2D" index="0"]
-
-shape = SubResource( 19 )
 
 [connection signal="body_entered" from="LowerBound" to="Heros" method="_on_LowerBound_body_entered"]
 

@@ -26,7 +26,7 @@ func _physics_process(delta):
 	var crouch = Input.is_action_pressed('ui_down')
 	
 	if hero_on_ladder:
-		hero_on_ladder.set_state("ladder")
+		hero_on_ladder.set_animation_state("ladder")
 		if jump:
 			hero_on_ladder.global_position += Vector2(0, -200 * delta)
 		if crouch:

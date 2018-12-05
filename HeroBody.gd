@@ -1,9 +1,15 @@
 extends KinematicBody2D
 
-export (int) var run_speed = 200
-export (int) var jump_speed = 400
-export (int) var gravity = 1200
-export (Vector2) var spawn_position = Vector2(100, 100)
+export (int) var default_run_speed = 200
+export (int) var default_jump_speed = 400
+export (int) var default_gravity = 1200
+export (Vector2) var default_spawn_position = Vector2(100, 100)
+
+var	run_speed = default_run_speed
+var	jump_speed = default_jump_speed
+var	gravity = default_gravity
+var	spawn_position = default_spawn_position
+
 
 var BulletSmall = preload("BulletSmall.tscn")
 var BulletMedium = preload("BulletMedium.tscn")
@@ -19,6 +25,9 @@ var current_animation_state = "stand"
 var last_shoot = 0
 var last_update = 0
 var hero_killed = true
+var can_shoot = true
+var in_cave = false
+var in_front_of_cave = null #Vector2
 
 var delegated_movement = false;
 
@@ -43,19 +52,26 @@ func _physics_process(delta):
 	if health > 0:
 		var right = Input.is_action_pressed('ui_right')
 		var left = Input.is_action_pressed('ui_left')
-		var jump = Input.is_action_pressed('ui_up')
-		var crouch = Input.is_action_just_pressed('ui_down')
+		var up = Input.is_action_pressed('ui_up')
+		var down = Input.is_action_just_pressed('ui_down')
 		var cheat_up_weapon = Input.is_action_just_pressed("cheat_upgrade_weapon")
 		var select = Input.is_action_just_pressed("ui_select")
 			
 		if not delegated_movement:
 			velocity.x = 0
 			
-			if jump and is_on_floor():
-				velocity.y = -jump_speed
-			else:
+			if up:
 				if is_on_floor():
-					jumping = false
+					if in_front_of_cave != null:
+						enter_cave(in_front_of_cave)
+					else:
+						velocity.y = -jump_speed
+			elif is_on_floor():
+				jumping = false
+				
+			if down:
+				if in_cave:
+					exit_from_cave()
 				
 			if right:
 				velocity.x += run_speed
@@ -71,10 +87,7 @@ func _physics_process(delta):
 			upgrade_weapon()
 		
 		if select:
-			if in_cave:
-				exit_from_cave()
-			else:
-				shoot()
+			shoot()
 	else:
 		# health negative
 		kill()
@@ -111,6 +124,9 @@ func set_animation_state(new_animation_state):
 
 
 func shoot():
+	if not can_shoot:
+		return
+		
 	if OS.get_ticks_msec() - last_shoot < reload_duration:
 		return
 	last_shoot = OS.get_ticks_msec()
@@ -194,15 +210,43 @@ func hero_body_verify():
 	this method created just to be checked by has_method() method
 	"""
 	pass
-	
 
-func enter_cave():
+
+func enter_cave(cave_position):
+	self.position = cave_position
 	hide()
+	disable_movement()
+	disable_shooting()
 	$CollisionShape2D.disabled = true
-	pass
+	in_cave = true
 	
 	
 func exit_from_cave():
 	show()
+	enable_movement()
+	enable_shooting()
 	$CollisionShape2D.disabled = false
+	in_cave = false
+	
+	
+func disable_movement():
+	run_speed = 0
+	jump_speed = 0
+	gravity = 0
+	velocity = Vector2(0, 0)
+	
+	
+func enable_movement():
+	run_speed = default_run_speed
+	jump_speed = default_jump_speed
+	gravity = default_gravity
+	
+
+func disable_shooting():
+	can_shoot = false
+	pass
+	
+	
+func enable_shooting():
+	can_shoot = true
 	pass
