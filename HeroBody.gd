@@ -15,7 +15,7 @@ var velocity = Vector2()
 var jumping = false
 var health = 100
 var head = "right"
-var current_state = "stand"
+var current_animation_state = "stand"
 var last_shoot = 0
 var last_update = 0
 var hero_killed = true
@@ -25,6 +25,7 @@ var delegated_movement = false;
 
 func _ready():
 	spawn()
+	update()
 
 
 func _process(delta):
@@ -70,40 +71,43 @@ func _physics_process(delta):
 			upgrade_weapon()
 		
 		if select:
-			shoot()
+			if in_cave:
+				exit_from_cave()
+			else:
+				shoot()
 	else:
 		# health negative
 		kill()
 	
-	update_state()
+	update_animation_state()
 
 
-func update_state():
+func update_animation_state():
 	if health == 0:
-		set_state("dead")
+		set_animation_state("dead")
 		return
 		
 	if velocity.y != 0 and not delegated_movement:
 		if velocity.y < 0:
-			set_state("jump_up")
+			set_animation_state("jump_up")
 		else:
-			set_state("jump_down")
+			set_animation_state("jump_down")
 		return
 	
 	if is_on_floor() and not delegated_movement:
 		if OS.get_ticks_msec() - last_shoot > 400:
 			if velocity.length() < 0.01:
-				set_state("stand")
+				set_animation_state("stand")
 			else:
-				set_state("walk")
+				set_animation_state("walk")
 			return
 
 
-func set_state(new_state):
-	if current_state != new_state:
-		current_state = new_state
-		print(new_state)
-		$AnimatedSprite.play(current_state)
+func set_animation_state(new_animation_state):
+	if current_animation_state != new_animation_state:
+		current_animation_state = new_animation_state
+#		print(new_animation_state)
+		$AnimatedSprite.play(current_animation_state)
 
 
 func shoot():
@@ -111,7 +115,7 @@ func shoot():
 		return
 	last_shoot = OS.get_ticks_msec()
 	
-	set_state("attack")
+	set_animation_state("attack")
 	var bullet = CurrentBullet.instance()
 	bullet.start(position, head)
 	get_parent().add_child(bullet)
@@ -119,7 +123,7 @@ func shoot():
 
 
 func hit(damage):
-	print("damage ", damage)
+#	print("damage ", damage)
 	health -= damage
 	if health <= 0:
 		kill()
@@ -189,4 +193,16 @@ func hero_body_verify():
 	"""
 	this method created just to be checked by has_method() method
 	"""
+	pass
+	
+
+func enter_cave():
+	hide()
+	$CollisionShape2D.disabled = true
+	pass
+	
+	
+func exit_from_cave():
+	show()
+	$CollisionShape2D.disabled = false
 	pass

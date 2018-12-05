@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://tiles_primitives.tres" type="TileSet" id=1]
 [ext_resource path="res://Texture/95983.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Heros.gd" type="Script" id=4]
 [ext_resource path="res://HeroBody.tscn" type="PackedScene" id=5]
 [ext_resource path="res://LadderParent.gd" type="Script" id=6]
+[ext_resource path="res://Area2D.gd" type="Script" id=7]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -439,7 +440,9 @@ __meta__ = {
 
 script = ExtResource( 4 )
 
-[node name="HeroBody" parent="Heros" index="0" instance=ExtResource( 5 )]
+[node name="Hero" parent="Heros" index="0" instance=ExtResource( 5 )]
+
+_sections_unfolded = [ "Pause" ]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="3"]
 
@@ -646,6 +649,7 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
+script = ExtResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cave1/Area2D" index="0"]
 

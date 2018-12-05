@@ -1,26 +1,21 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://HeroBody.gd" type="Script" id=1]
-[ext_resource path="res://Texture/asset_hero_attack.png" type="Texture" id=2]
+[ext_resource path="res://Texture/asset_hero_dead.png" type="Texture" id=2]
 [ext_resource path="res://Texture/asset_hero_stand.png" type="Texture" id=3]
 [ext_resource path="res://Texture/asset_hero_walk.png" type="Texture" id=4]
 [ext_resource path="res://Texture/asset_hero_ladder_1.png" type="Texture" id=5]
 [ext_resource path="res://Texture/asset_hero_ladder_2.png" type="Texture" id=6]
 [ext_resource path="res://Texture/asset_hero_jump_up.png" type="Texture" id=7]
 [ext_resource path="res://Texture/asset_hero_jump_down.png" type="Texture" id=8]
-[ext_resource path="res://Texture/asset_hero_dead.png" type="Texture" id=9]
-
-[sub_resource type="RectangleShape2D" id=1]
-
-custom_solver_bias = 0.0
-extents = Vector2( 14.6613, 15 )
+[ext_resource path="res://Texture/asset_hero_attack.png" type="Texture" id=9]
 
 [sub_resource type="SpriteFrames" id=2]
 
 animations = [ {
-"frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": false,
-"name": "attack",
+"name": "dead",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
@@ -48,11 +43,16 @@ animations = [ {
 "name": "jump_down",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 9 ) ],
+"frames": [ ExtResource( 9 ), ExtResource( 3 ) ],
 "loop": false,
-"name": "dead",
+"name": "attack",
 "speed": 5.0
 } ]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 14.6613, 15 )
 
 [node name="HeroBody" type="KinematicBody2D" index="0"]
 
@@ -92,22 +92,22 @@ editor_draw_limits = true
 editor_draw_drag_margin = true
 _sections_unfolded = [ "Drag Margin", "Editor", "Limit", "Offset", "Smoothing", "Transform" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
-
-shape = SubResource( 1 )
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="." index="2"]
+[node name="AnimatedSprite" type="AnimatedSprite" parent="." index="1"]
 
 frames = SubResource( 2 )
 animation = "stand"
 playing = true
 
-[node name="RespawnTimer" type="Timer" parent="." index="3"]
+[node name="RespawnTimer" type="Timer" parent="." index="2"]
 
 process_mode = 1
 wait_time = 5.0
 one_shot = false
 autostart = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="3"]
+
+shape = SubResource( 1 )
 
 [connection signal="timeout" from="RespawnTimer" to="." method="spawn"]
 
