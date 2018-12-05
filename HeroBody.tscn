@@ -54,13 +54,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="Hero" type="Node2D"]
-
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="HeroBody" type="KinematicBody2D" parent="." index="0"]
+[node name="HeroBody" type="KinematicBody2D" index="0"]
 
 input_pickable = false
 collision_layer = 1
@@ -72,7 +66,7 @@ jump_speed = 400
 gravity = 1200
 spawn_position = Vector2( 100, 100 )
 
-[node name="Camera2D" type="Camera2D" parent="HeroBody" index="0"]
+[node name="Camera2D" type="Camera2D" parent="." index="0"]
 
 anchor_mode = 1
 rotating = false
@@ -98,23 +92,23 @@ editor_draw_limits = true
 editor_draw_drag_margin = true
 _sections_unfolded = [ "Drag Margin", "Editor", "Limit", "Offset", "Smoothing", "Transform" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HeroBody" index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
 shape = SubResource( 1 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="HeroBody" index="2"]
+[node name="AnimatedSprite" type="AnimatedSprite" parent="." index="2"]
 
 frames = SubResource( 2 )
 animation = "stand"
 playing = true
 
-[node name="RespawnTimer" type="Timer" parent="HeroBody" index="3"]
+[node name="RespawnTimer" type="Timer" parent="." index="3"]
 
 process_mode = 1
 wait_time = 5.0
 one_shot = false
 autostart = false
 
-[connection signal="timeout" from="HeroBody/RespawnTimer" to="HeroBody" method="spawn"]
+[connection signal="timeout" from="RespawnTimer" to="." method="spawn"]
 
 
