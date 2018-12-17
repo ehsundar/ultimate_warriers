@@ -42,14 +42,14 @@ func _on_button_join_pressed():
 
 func _on_connection_success():
 	get_node("connect/label_error").text = ""
-	get_node("connect/host").disabled = false
-	get_node("connect/join").disabled = false
+	get_node("connect/button_host").disabled = false
+	get_node("connect/button_join").disabled = false
 	get_node("connect").hide()
 	get_node("players").show()
 
 func _on_connection_failed():
-	get_node("connect/host").disabled = false
-	get_node("connect/join").disabled = false
+	get_node("connect/button_host").disabled = false
+	get_node("connect/button_join").disabled = false
 	get_node("connect/label_error").text = "Connection failed."
 
 
@@ -57,8 +57,8 @@ func _on_game_ended():
 	show()
 	get_node("connect").show()
 	get_node("players").hide()
-	get_node("connect/host").disabled = false
-	get_node("connect/join").disabled = false
+	get_node("connect/button_host").disabled = false
+	get_node("connect/button_join").disabled = false
 
 func _on_game_error(errtxt):
 	_on_game_ended()
