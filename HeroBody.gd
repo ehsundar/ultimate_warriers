@@ -95,6 +95,10 @@ func _physics_process(delta):
 	update_animation_state()
 
 
+func set_player_name(player_name):
+	get_node("label").text = player_name
+
+
 func update_animation_state():
 	if health == 0:
 		set_animation_state("dead")

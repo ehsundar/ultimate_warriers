@@ -1,14 +1,12 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://tiles_primitives.tres" type="TileSet" id=1]
 [ext_resource path="res://Texture/95983.png" type="Texture" id=2]
-[ext_resource path="res://SkyMap.gd" type="Script" id=3]
-[ext_resource path="res://Heros.gd" type="Script" id=4]
-[ext_resource path="res://HeroBody.tscn" type="PackedScene" id=5]
-[ext_resource path="res://LadderParent.gd" type="Script" id=6]
-[ext_resource path="res://Cave.tscn" type="PackedScene" id=7]
+[ext_resource path="res://LadderParent.gd" type="Script" id=3]
+[ext_resource path="res://Cave.tscn" type="PackedScene" id=4]
+[ext_resource path="res://game_info.gd" type="Script" id=5]
 
-[sub_resource type="ConvexPolygonShape2D" id=1]
+[sub_resource type="ConvexPolygonShape2D" id=3]
 
 custom_solver_bias = 0.0
 points = PoolVector2Array( -25, -25, 25, -25, 25, 25, -25, 25 )
@@ -18,20 +16,15 @@ points = PoolVector2Array( -25, -25, 25, -25, 25, 25, -25, 25 )
 flags = 4
 load_path = ""
 
-[sub_resource type="ConvexPolygonShape2D" id=3]
+[sub_resource type="ConvexPolygonShape2D" id=4]
 
 custom_solver_bias = 0.0
 points = PoolVector2Array( -25, -25, 25, -25, 25, 25, -25, 25 )
 
-[sub_resource type="ConvexPolygonShape2D" id=4]
-
-custom_solver_bias = 0.0
-points = PoolVector2Array( 25, 25, -25, 25, 25, -25 )
-
 [sub_resource type="ConvexPolygonShape2D" id=5]
 
 custom_solver_bias = 0.0
-points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
+points = PoolVector2Array( 25, 25, -25, 25, 25, -25 )
 
 [sub_resource type="ConvexPolygonShape2D" id=6]
 
@@ -51,12 +44,12 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 [sub_resource type="ConvexPolygonShape2D" id=9]
 
 custom_solver_bias = 0.0
-points = PoolVector2Array( -25, -25, 25, 25, -25, 25 )
+points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 
 [sub_resource type="ConvexPolygonShape2D" id=10]
 
 custom_solver_bias = 0.0
-points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
+points = PoolVector2Array( -25, -25, 25, 25, -25, 25 )
 
 [sub_resource type="ConvexPolygonShape2D" id=11]
 
@@ -68,7 +61,12 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 custom_solver_bias = 0.0
 points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 
-[sub_resource type="TileSet" id=13]
+[sub_resource type="ConvexPolygonShape2D" id=13]
+
+custom_solver_bias = 0.0
+points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
+
+[sub_resource type="TileSet" id=14]
 
 0/name = "Wall"
 0/texture = SubResource( 2 )
@@ -81,7 +79,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 0/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 1 ),
+"shape": SubResource( 3 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 25, 25 )
 } ]
 1/name = "Floor"
@@ -95,7 +93,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 1/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 3 ),
+"shape": SubResource( 4 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 25, 25 )
 } ]
 2/name = "RampUp"
@@ -109,7 +107,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 2/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 4 ),
+"shape": SubResource( 5 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 25, 25 )
 } ]
 3/name = "RampDown"
@@ -123,7 +121,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 3/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 9 ),
+"shape": SubResource( 10 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 25, 25 )
 } ]
 4/name = "Background"
@@ -146,7 +144,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 5/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 10 ),
+"shape": SubResource( 11 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 15, 15 )
 } ]
 6/name = "GrassFloorLeft"
@@ -160,7 +158,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 6/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 11 ),
+"shape": SubResource( 12 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 15, 15 )
 } ]
 7/name = "GrassFloorRight"
@@ -174,7 +172,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 7/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 12 ),
+"shape": SubResource( 13 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 15, 15 )
 } ]
 8/name = "GrassWallFront"
@@ -305,7 +303,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 21/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 5 ),
+"shape": SubResource( 6 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 15, 15 )
 } ]
 22/name = "InvisibleBodrer"
@@ -319,7 +317,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 22/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 6 ),
+"shape": SubResource( 7 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 15, 15 )
 } ]
 23/name = "InvisibleSafeBodrer"
@@ -333,7 +331,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 23/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 7 ),
+"shape": SubResource( 8 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 15, 15 )
 } ]
 24/name = "InvisibleKillBodrer"
@@ -347,41 +345,41 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 24/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 8 ),
+"shape": SubResource( 9 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 15, 15 )
 } ]
 _sections_unfolded = [ "9", "Resource" ]
 
-[sub_resource type="RectangleShape2D" id=14]
+[sub_resource type="RectangleShape2D" id=15]
 
 custom_solver_bias = 0.0
 extents = Vector2( 785, 10 )
 
-[sub_resource type="RectangleShape2D" id=15]
+[sub_resource type="RectangleShape2D" id=16]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 18.1228 )
 
-[sub_resource type="RectangleShape2D" id=16]
+[sub_resource type="RectangleShape2D" id=17]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 3.2 )
 
-[sub_resource type="RectangleShape2D" id=17]
+[sub_resource type="RectangleShape2D" id=18]
 
 custom_solver_bias = 0.0
 extents = Vector2( 5, 5 )
 
-[sub_resource type="RectangleShape2D" id=18]
+[sub_resource type="RectangleShape2D" id=19]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 54.3683 )
 
-[node name="Stage1" type="Node2D" index="0"]
+[node name="world1" type="Node2D"]
 
 _sections_unfolded = [ "Transform" ]
 
-[node name="HillsMap" type="TileMap" parent="." index="0"]
+[node name="map_hills" type="TileMap" parent="." index="0"]
 
 mode = 0
 tile_set = ExtResource( 1 )
@@ -405,11 +403,11 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="SkyMap" type="TileMap" parent="." index="1"]
+[node name="map_sky" type="TileMap" parent="." index="1"]
 
 z_index = -7
 mode = 0
-tile_set = SubResource( 13 )
+tile_set = SubResource( 14 )
 cell_size = Vector2( 30, 30 )
 cell_quadrant_size = 16
 cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
@@ -425,54 +423,36 @@ collision_mask = 0
 occluder_light_mask = 1
 format = 1
 tile_data = PoolIntArray( -1, 23, 0, -65536, 23, 0, -65535, 23, 0, -65534, 23, 0, -65533, 23, 0, -65532, 23, 0, -65531, 23, 0, -65530, 23, 0, -65529, 23, 0, -65528, 23, 0, -65527, 23, 0, -65526, 23, 0, -65525, 23, 0, -65524, 23, 0, -65523, 23, 0, -65522, 23, 0, -65521, 23, 0, -65520, 23, 0, -65519, 23, 0, -65518, 23, 0, -65517, 23, 0, -65516, 23, 0, -65515, 23, 0, -65514, 23, 0, -65513, 23, 0, -65512, 23, 0, -65511, 23, 0, -65510, 23, 0, -65509, 23, 0, 65535, 23, 0, 0, 15, 0, 1, 15, 0, 2, 15, 0, 3, 15, 0, 4, 15, 0, 5, 15, 0, 6, 15, 0, 7, 15, 0, 8, 15, 0, 9, 15, 0, 10, 15, 0, 11, 15, 0, 12, 15, 0, 13, 15, 0, 14, 15, 0, 15, 15, 0, 16, 15, 0, 17, 15, 0, 18, 15, 0, 19, 15, 0, 20, 15, 0, 21, 15, 0, 22, 15, 0, 23, 15, 0, 24, 15, 0, 25, 15, 0, 26, 15, 0, 27, 15, 0, 28, 15, 0, 29, 15, 0, 30, 15, 0, 31, 15, 0, 32, 15, 0, 33, 15, 0, 34, 15, 0, 35, 15, 0, 36, 15, 0, 37, 15, 0, 38, 15, 0, 39, 15, 0, 40, 15, 0, 41, 15, 0, 42, 15, 0, 43, 15, 0, 44, 15, 0, 45, 15, 0, 46, 15, 0, 131071, 23, 0, 65536, 15, 0, 65537, 15, 0, 65538, 15, 0, 65539, 15, 0, 65540, 15, 0, 65541, 15, 0, 65542, 15, 0, 65543, 15, 0, 65544, 18, 0, 65545, 15, 0, 65546, 15, 0, 65547, 15, 0, 65548, 15, 0, 65549, 15, 0, 65550, 15, 0, 65551, 15, 0, 65552, 15, 0, 65553, 15, 0, 65554, 15, 0, 65555, 15, 0, 65556, 18, 0, 65557, 15, 0, 65558, 15, 0, 65559, 15, 0, 65560, 15, 0, 65561, 15, 0, 65562, 15, 0, 65563, 15, 0, 65564, 15, 0, 65565, 15, 0, 65566, 15, 0, 65567, 15, 0, 65568, 15, 0, 65569, 15, 0, 65570, 15, 0, 65571, 15, 0, 65572, 15, 0, 65573, 15, 0, 65574, 15, 0, 65575, 15, 0, 65576, 15, 0, 65577, 15, 0, 65578, 15, 0, 65579, 15, 0, 65580, 15, 0, 65581, 15, 0, 65582, 15, 0, 196607, 23, 0, 131072, 15, 0, 131073, 15, 0, 131074, 15, 0, 131075, 18, 0, 131076, 15, 0, 131077, 15, 0, 131078, 15, 0, 131079, 15, 0, 131080, 15, 0, 131081, 15, 0, 131082, 15, 0, 131083, 15, 0, 131084, 15, 0, 131085, 15, 0, 131086, 15, 0, 131087, 15, 0, 131088, 15, 0, 131089, 15, 0, 131090, 15, 0, 131091, 15, 0, 131092, 15, 0, 131093, 15, 0, 131094, 15, 0, 131095, 15, 0, 131096, 15, 0, 131097, 15, 0, 131098, 15, 0, 131099, 15, 0, 131100, 15, 0, 131101, 15, 0, 131102, 15, 0, 131103, 15, 0, 131104, 8, 0, 131105, 15, 0, 131106, 15, 0, 131107, 15, 0, 131108, 15, 0, 131109, 15, 0, 131110, 15, 0, 131111, 15, 0, 131112, 15, 0, 131113, 15, 0, 131114, 15, 0, 131115, 15, 0, 131116, 15, 0, 131117, 15, 0, 131118, 15, 0, 262143, 23, 0, 196608, 15, 0, 196609, 15, 0, 196610, 15, 0, 196611, 15, 0, 196612, 15, 0, 196613, 15, 0, 196614, 15, 0, 196615, 15, 0, 196616, 15, 0, 196617, 15, 0, 196618, 15, 0, 196619, 15, 0, 196620, 15, 0, 196621, 15, 0, 196622, 15, 0, 196623, 15, 0, 196624, 15, 0, 196625, 15, 0, 196626, 15, 0, 196627, 15, 0, 196628, 15, 0, 196629, 15, 0, 196630, 15, 0, 196631, 15, 0, 196632, 15, 0, 196633, 15, 0, 196634, 15, 0, 196635, 15, 0, 196636, 15, 0, 196637, 15, 0, 196638, 15, 0, 196639, 15, 0, 196640, 15, 0, 196641, 15, 0, 196642, 15, 0, 196643, 15, 0, 196644, 15, 0, 196645, 18, 0, 196646, 15, 0, 196647, 15, 0, 196648, 15, 0, 196649, 15, 0, 196650, 15, 0, 196651, 15, 0, 196652, 15, 0, 196653, 15, 0, 196654, 15, 0, 327679, 23, 0, 262144, 15, 0, 262145, 15, 0, 262146, 15, 0, 262147, 15, 0, 262148, 15, 0, 262149, 15, 0, 262150, 15, 0, 262151, 8, 0, 262152, 15, 0, 262153, 15, 0, 262154, 15, 0, 262155, 15, 0, 262156, 15, 0, 262157, 18, 0, 262158, 15, 0, 262159, 15, 0, 262160, 15, 0, 262161, 15, 0, 262162, 15, 0, 262163, 15, 0, 262164, 15, 0, 262165, 15, 0, 262166, 15, 0, 262167, 15, 0, 262168, 15, 0, 262169, 15, 0, 262170, 15, 0, 262171, 15, 0, 262172, 15, 0, 262173, 8, 0, 262174, 15, 0, 262175, 15, 0, 262176, 15, 0, 262177, 15, 0, 262178, 15, 0, 262179, 15, 0, 262180, 15, 0, 262181, 15, 0, 262182, 15, 0, 262183, 15, 0, 262184, 15, 0, 262185, 15, 0, 262186, 15, 0, 262187, 15, 0, 262188, 15, 0, 262189, 15, 0, 262190, 15, 0, 393215, 23, 0, 327680, 9, 0, 327681, 15, 0, 327682, 8, 0, 327683, 15, 0, 327684, 15, 0, 327685, 15, 0, 327686, 15, 0, 327687, 15, 0, 327688, 8, 0, 327689, 15, 0, 327690, 15, 0, 327691, 15, 0, 327692, 15, 0, 327693, 15, 0, 327694, 15, 0, 327695, 15, 0, 327696, 15, 0, 327697, 15, 0, 327698, 15, 0, 327699, 15, 0, 327700, 15, 0, 327701, 15, 0, 327702, 15, 0, 327703, 15, 0, 327704, 15, 0, 327705, 15, 0, 327706, 15, 0, 327707, 15, 0, 327708, 15, 0, 327709, 15, 0, 327710, 15, 0, 327711, 15, 0, 327712, 15, 0, 327713, 15, 0, 327714, 15, 0, 327715, 15, 0, 327716, 15, 0, 327717, 15, 0, 327718, 15, 0, 327719, 15, 0, 327720, 15, 0, 327721, 15, 0, 327722, 15, 0, 327723, 15, 0, 327724, 15, 0, 327725, 15, 0, 327726, 15, 0, 458751, 23, 0, 393216, 9, 0, 393217, 15, 0, 393218, 15, 0, 393219, 15, 0, 393220, 15, 0, 393221, 15, 0, 393222, 15, 0, 393223, 15, 0, 393224, 15, 0, 393225, 15, 0, 393226, 15, 0, 393227, 15, 0, 393228, 15, 0, 393229, 15, 0, 393230, 15, 0, 393231, 15, 0, 393232, 15, 0, 393233, 18, 0, 393234, 15, 0, 393235, 15, 0, 393236, 15, 0, 393237, 15, 0, 393238, 15, 0, 393239, 15, 0, 393240, 15, 0, 393241, 15, 0, 393242, 8, 0, 393243, 15, 0, 393244, 15, 0, 393245, 15, 0, 393246, 15, 0, 393247, 15, 0, 393248, 15, 0, 393249, 15, 0, 393250, 15, 0, 393251, 15, 0, 393252, 15, 0, 393253, 15, 0, 393254, 15, 0, 393255, 15, 0, 393256, 15, 0, 393257, 15, 0, 393258, 15, 0, 393259, 15, 0, 393260, 15, 0, 393261, 15, 0, 393262, 15, 0, 524287, 23, 0, 458752, 9, 0, 458753, 15, 0, 458754, 15, 0, 458755, 18, 0, 458756, 15, 0, 458757, 15, 0, 458758, 15, 0, 458759, 15, 0, 458760, 15, 0, 458761, 15, 0, 458762, 15, 0, 458763, 15, 0, 458764, 15, 0, 458765, 15, 0, 458766, 15, 0, 458767, 15, 0, 458768, 15, 0, 458769, 15, 0, 458770, 15, 0, 458771, 15, 0, 458772, 15, 0, 458773, 15, 0, 458774, 15, 0, 458775, 15, 0, 458776, 15, 0, 458777, 15, 0, 458778, 15, 0, 458779, 15, 0, 458780, 15, 0, 458781, 15, 0, 458782, 15, 0, 458783, 15, 0, 458784, 15, 0, 458785, 15, 0, 458786, 15, 0, 458787, 15, 0, 458788, 15, 0, 458789, 15, 0, 458790, 15, 0, 458791, 15, 0, 458792, 8, 0, 458793, 15, 0, 458794, 15, 0, 458795, 15, 0, 458796, 15, 0, 458797, 15, 0, 458798, 15, 0, 589823, 23, 0, 524288, 9, 0, 524289, 15, 0, 524290, 15, 0, 524291, 15, 0, 524292, 15, 0, 524293, 15, 0, 524294, 15, 0, 524295, 15, 0, 524296, 15, 0, 524297, 15, 0, 524298, 15, 0, 524299, 15, 0, 524300, 15, 0, 524301, 15, 0, 524302, 15, 0, 524303, 15, 0, 524304, 15, 0, 524305, 15, 0, 524306, 15, 0, 524307, 15, 0, 524308, 15, 0, 524309, 15, 0, 524310, 15, 0, 524311, 15, 0, 524312, 15, 0, 524313, 15, 0, 524314, 15, 0, 524315, 15, 0, 524316, 15, 0, 524317, 15, 0, 524318, 15, 0, 524319, 15, 0, 524320, 15, 0, 524321, 15, 0, 524322, 15, 0, 524323, 15, 0, 524324, 15, 0, 524325, 15, 0, 524326, 15, 0, 524327, 15, 0, 524328, 15, 0, 524329, 15, 0, 524330, 15, 0, 524331, 15, 0, 524332, 15, 0, 524333, 15, 0, 524334, 15, 0, 655359, 23, 0, 589824, 9, 0, 589825, 15, 0, 589826, 15, 0, 589827, 15, 0, 589828, 15, 0, 589829, 15, 0, 589830, 8, 0, 589831, 15, 0, 589832, 15, 0, 589833, 15, 0, 589834, 15, 0, 589835, 15, 0, 589836, 15, 0, 589837, 15, 0, 589838, 15, 0, 589839, 15, 0, 589840, 15, 0, 589841, 15, 0, 589842, 15, 0, 589843, 15, 0, 589844, 15, 0, 589845, 15, 0, 589846, 15, 0, 589847, 15, 0, 589848, 15, 0, 589849, 15, 0, 589850, 15, 0, 589851, 15, 0, 589852, 15, 0, 589853, 15, 0, 589854, 15, 0, 589855, 15, 0, 589856, 15, 0, 589857, 15, 0, 589858, 15, 0, 589859, 15, 0, 589860, 18, 0, 589861, 15, 0, 589862, 15, 0, 589863, 15, 0, 589864, 15, 0, 589865, 15, 0, 589866, 15, 0, 589867, 15, 0, 589868, 15, 0, 589869, 15, 0, 589870, 15, 0, 720895, 23, 0, 655360, 9, 0, 655361, 15, 0, 655362, 15, 0, 655363, 15, 0, 655364, 15, 0, 655365, 15, 0, 655366, 15, 0, 655367, 15, 0, 655368, 15, 0, 655369, 15, 0, 655370, 15, 0, 655371, 15, 0, 655372, 15, 0, 655373, 15, 0, 655374, 15, 0, 655375, 15, 0, 655376, 15, 0, 655377, 15, 0, 655378, 15, 0, 655379, 15, 0, 655380, 15, 0, 655381, 15, 0, 655382, 15, 0, 655383, 15, 0, 655384, 15, 0, 655385, 15, 0, 655386, 15, 0, 655387, 15, 0, 655388, 15, 0, 655389, 15, 0, 655390, 15, 0, 655391, 15, 0, 655392, 15, 0, 655393, 15, 0, 655394, 15, 0, 655395, 15, 0, 655396, 15, 0, 655397, 15, 0, 655398, 15, 0, 655399, 15, 0, 655400, 15, 0, 655401, 15, 0, 655402, 15, 0, 655403, 15, 0, 655404, 15, 0, 655405, 15, 0, 655406, 15, 0, 786431, 23, 0, 720896, 9, 0, 720897, 15, 0, 720898, 15, 0, 720899, 15, 0, 720900, 15, 0, 720901, 15, 0, 720902, 15, 0, 720903, 15, 0, 720904, 15, 0, 720905, 15, 0, 720906, 15, 0, 720907, 15, 0, 720908, 15, 0, 720909, 15, 0, 720910, 15, 0, 720911, 15, 0, 720912, 15, 0, 720913, 15, 0, 720914, 18, 0, 720915, 15, 0, 720916, 15, 0, 720917, 15, 0, 720918, 15, 0, 720919, 15, 0, 720920, 15, 0, 720921, 15, 0, 720922, 8, 0, 720923, 15, 0, 720924, 15, 0, 720925, 15, 0, 720926, 15, 0, 720927, 15, 0, 720928, 15, 0, 720929, 15, 0, 720930, 15, 0, 720931, 8, 0, 720932, 15, 0, 720933, 15, 0, 720934, 15, 0, 720935, 15, 0, 720936, 15, 0, 720937, 15, 0, 720938, 15, 0, 720939, 15, 0, 720940, 15, 0, 720941, 15, 0, 720942, 15, 0, 851967, 23, 0, 786432, 9, 0, 786433, 15, 0, 786434, 9, 0, 786435, 15, 0, 786436, 15, 0, 786437, 15, 0, 786438, 15, 0, 786439, 15, 0, 786440, 15, 0, 786441, 15, 0, 786442, 15, 0, 786443, 15, 0, 786444, 15, 0, 786445, 15, 0, 786446, 15, 0, 786447, 15, 0, 786448, 15, 0, 786449, 15, 0, 786450, 15, 0, 786451, 15, 0, 786452, 15, 0, 786453, 15, 0, 786454, 15, 0, 786455, 15, 0, 786456, 15, 0, 786457, 15, 0, 786458, 15, 0, 786459, 15, 0, 786460, 15, 0, 786461, 15, 0, 786462, 15, 0, 786463, 15, 0, 786464, 15, 0, 786465, 15, 0, 786466, 15, 0, 786467, 15, 0, 786468, 15, 0, 786469, 15, 0, 786470, 15, 0, 786471, 15, 0, 786472, 15, 0, 786473, 15, 0, 786474, 15, 0, 786475, 15, 0, 786476, 15, 0, 786477, 15, 0, 786478, 15, 0, 917503, 23, 0, 851968, 9, 0, 851969, 15, 0, 851970, 15, 0, 851971, 15, 0, 851972, 15, 0, 851973, 15, 0, 851974, 15, 0, 851975, 15, 0, 851976, 15, 0, 851977, 15, 0, 851978, 15, 0, 851979, 15, 0, 851980, 15, 0, 851981, 15, 0, 851982, 15, 0, 851983, 15, 0, 851984, 15, 0, 851985, 15, 0, 851986, 15, 0, 851987, 15, 0, 851988, 15, 0, 851989, 15, 0, 851990, 15, 0, 851991, 15, 0, 851992, 15, 0, 851993, 15, 0, 851994, 15, 0, 851995, 15, 0, 851996, 15, 0, 851997, 15, 0, 851998, 15, 0, 851999, 15, 0, 852000, 15, 0, 852001, 15, 0, 852002, 15, 0, 852003, 15, 0, 852004, 15, 0, 852005, 15, 0, 852006, 15, 0, 852007, 15, 0, 852008, 15, 0, 852009, 15, 0, 852010, 15, 0, 852011, 15, 0, 852012, 15, 0, 852013, 15, 0, 852014, 15, 0, 983039, 23, 0, 917504, 9, 0, 917505, 15, 0, 917506, 15, 0, 917507, 15, 0, 917508, 15, 0, 917509, 15, 0, 917510, 15, 0, 917511, 15, 0, 917512, 15, 0, 917513, 15, 0, 917514, 15, 0, 917515, 15, 0, 917516, 15, 0, 917517, 15, 0, 917518, 15, 0, 917519, 8, 0, 917520, 15, 0, 917521, 15, 0, 917522, 15, 0, 917523, 15, 0, 917524, 15, 0, 917525, 15, 0, 917526, 15, 0, 917527, 15, 0, 917528, 15, 0, 917529, 15, 0, 917530, 15, 0, 917531, 15, 0, 917532, 15, 0, 917533, 15, 0, 917534, 15, 0, 917535, 15, 0, 917536, 15, 0, 917537, 15, 0, 917538, 15, 0, 917539, 15, 0, 917540, 15, 0, 917541, 15, 0, 917542, 15, 0, 917543, 15, 0, 917544, 15, 0, 917545, 15, 0, 917546, 15, 0, 917547, 15, 0, 917548, 15, 0, 917549, 15, 0, 917550, 15, 0, 1048575, 23, 0, 983040, 9, 0, 983041, 15, 0, 983042, 15, 0, 983043, 15, 0, 983044, 15, 0, 983045, 15, 0, 983046, 15, 0, 983047, 15, 0, 983048, 15, 0, 983049, 15, 0, 983050, 15, 0, 983051, 15, 0, 983052, 15, 0, 983053, 15, 0, 983054, 15, 0, 983055, 15, 0, 983056, 15, 0, 983057, 15, 0, 983058, 15, 0, 983059, 15, 0, 983060, 15, 0, 983061, 15, 0, 983062, 15, 0, 983063, 15, 0, 983064, 15, 0, 983065, 15, 0, 983066, 15, 0, 983067, 15, 0, 983068, 15, 0, 983069, 15, 0, 983070, 15, 0, 983071, 15, 0, 983072, 15, 0, 983073, 15, 0, 983074, 15, 0, 983075, 15, 0, 983076, 15, 0, 983077, 15, 0, 983078, 15, 0, 983079, 15, 0, 983080, 15, 0, 983081, 15, 0, 983082, 15, 0, 983083, 15, 0, 983084, 15, 0, 983085, 15, 0, 983086, 15, 0, 1114111, 24, 0, 1048576, 24, 0, 1048577, 24, 0, 1048578, 24, 0, 1048579, 24, 0, 1048580, 24, 0, 1048581, 24, 0, 1048582, 24, 0, 1048583, 24, 0, 1048584, 24, 0, 1048585, 24, 0, 1048586, 24, 0, 1048587, 24, 0, 1048588, 24, 0, 1048589, 24, 0, 1048590, 24, 0, 1048591, 24, 0, 1048592, 24, 0 )
-script = ExtResource( 3 )
 _sections_unfolded = [ "Transform" ]
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Heros" type="Node2D" parent="." index="2"]
+[node name="players" type="Node2D" parent="." index="2"]
 
-script = ExtResource( 4 )
+[node name="spawn_points" type="Node2D" parent="." index="3"]
 
-[node name="Hero" parent="Heros" index="0" instance=ExtResource( 5 )]
+[node name="spawn1" type="Position2D" parent="spawn_points" index="0"]
 
-_sections_unfolded = [ "Pause" ]
+position = Vector2( 90, 90 )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="3"]
+[node name="spawn2" type="Position2D" parent="spawn_points" index="1"]
+
+position = Vector2( 100, 295 )
+
+[node name="spawn3" type="Position2D" parent="spawn_points" index="2"]
+
+position = Vector2( 1260, 155 )
+
+[node name="spanw4" type="Position2D" parent="spawn_points" index="3"]
+
+position = Vector2( 1055, 10 )
+
+[node name="boundaries" type="Node2D" parent="." index="4"]
 
 editor/display_folded = true
-layer = 1
-offset = Vector2( 0, 0 )
-rotation = 0.0
-scale = Vector2( 1, 1 )
-transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
-[node name="MenuButton" type="MenuButton" parent="CanvasLayer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 51.0
-margin_bottom = 20.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-action_mode = 0
-enabled_focus_mode = 0
-shortcut = null
-group = null
-text = "MENU"
-flat = true
-align = 1
-items = [  ]
-
-[node name="LowerBound" type="Area2D" parent="." index="4"]
+[node name="boundary_lower" type="Area2D" parent="boundaries" index="0"]
 
 editor/display_folded = true
 input_pickable = true
@@ -483,21 +463,25 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LowerBound" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="boundaries/boundary_lower" index="0"]
 
 position = Vector2( 785, 470 )
-shape = SubResource( 14 )
+shape = SubResource( 15 )
 
-[node name="Ladder1" type="Node2D" parent="." index="5"]
+[node name="ladders" type="Node2D" parent="." index="5"]
 
 editor/display_folded = true
-script = ExtResource( 6 )
+
+[node name="Ladder1" type="Node2D" parent="ladders" index="0"]
+
+editor/display_folded = true
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
 }
 ladder_name = ""
 
-[node name="Ladder" type="Area2D" parent="Ladder1" index="0"]
+[node name="Ladder" type="Area2D" parent="ladders/Ladder1" index="0"]
 
 editor/display_folded = true
 position = Vector2( 285, 310 )
@@ -513,13 +497,13 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ladder1/Ladder" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ladders/Ladder1/Ladder" index="0"]
 
 position = Vector2( 0, -3.2 )
 scale = Vector2( 1, 1.05944 )
-shape = SubResource( 15 )
+shape = SubResource( 16 )
 
-[node name="LadderTop" type="Area2D" parent="Ladder1" index="1"]
+[node name="LadderTop" type="Area2D" parent="ladders/Ladder1" index="1"]
 
 editor/display_folded = true
 position = Vector2( 285, 225 )
@@ -535,12 +519,12 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ladder1/LadderTop" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ladders/Ladder1/LadderTop" index="0"]
 
 position = Vector2( 0, 19.2 )
-shape = SubResource( 16 )
+shape = SubResource( 17 )
 
-[node name="LadderBtm" type="Area2D" parent="Ladder1" index="2"]
+[node name="LadderBtm" type="Area2D" parent="ladders/Ladder1" index="2"]
 
 editor/display_folded = true
 position = Vector2( 285, 355 )
@@ -555,21 +539,21 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ladder1/LadderBtm" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ladders/Ladder1/LadderBtm" index="0"]
 
-shape = SubResource( 17 )
+shape = SubResource( 18 )
 
-[node name="Ladder2" type="Node2D" parent="." index="6"]
+[node name="Ladder2" type="Node2D" parent="ladders/Ladder1" index="3"]
 
 editor/display_folded = true
 position = Vector2( -300, -5 )
-script = ExtResource( 6 )
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
 }
 ladder_name = ""
 
-[node name="Ladder" type="Area2D" parent="Ladder2" index="0"]
+[node name="Ladder" type="Area2D" parent="ladders/Ladder1/Ladder2" index="0"]
 
 editor/display_folded = true
 position = Vector2( 435, 255 )
@@ -585,13 +569,13 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ladder2/Ladder" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ladders/Ladder1/Ladder2/Ladder" index="0"]
 
 position = Vector2( 0, -3.2 )
 scale = Vector2( 1, 1.05944 )
-shape = SubResource( 18 )
+shape = SubResource( 19 )
 
-[node name="LadderTop" type="Area2D" parent="Ladder2" index="1"]
+[node name="LadderTop" type="Area2D" parent="ladders/Ladder1/Ladder2" index="1"]
 
 editor/display_folded = true
 position = Vector2( 435, 110 )
@@ -607,12 +591,12 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ladder2/LadderTop" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ladders/Ladder1/Ladder2/LadderTop" index="0"]
 
 position = Vector2( 0, 19.2 )
-shape = SubResource( 16 )
+shape = SubResource( 17 )
 
-[node name="LadderBtm" type="Area2D" parent="Ladder2" index="2"]
+[node name="LadderBtm" type="Area2D" parent="ladders/Ladder1/Ladder2" index="2"]
 
 editor/display_folded = true
 position = Vector2( 435, 360 )
@@ -627,18 +611,50 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ladder2/LadderBtm" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ladders/Ladder1/Ladder2/LadderBtm" index="0"]
 
-shape = SubResource( 17 )
+shape = SubResource( 18 )
 
-[node name="Cave" parent="." index="7" instance=ExtResource( 7 )]
+[node name="caves" type="Node2D" parent="." index="6"]
+
+editor/display_folded = true
+
+[node name="Cave" parent="caves" index="0" instance=ExtResource( 4 )]
 
 position = Vector2( 720, 210 )
 
-[connection signal="body_entered" from="LowerBound" to="Heros" method="_on_LowerBound_body_entered"]
+[node name="game_info" type="CanvasLayer" parent="." index="7"]
 
-[connection signal="proximity" from="Ladder1" to="Heros" method="_on_Ladder_proximity"]
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+script = ExtResource( 5 )
 
-[connection signal="proximity" from="Ladder2" to="Heros" method="_on_Ladder_proximity"]
+[node name="Label" type="Label" parent="game_info" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 68.0
+margin_bottom = 14.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "something"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[connection signal="body_entered" from="boundaries/boundary_lower" to="players" method="_on_LowerBound_body_entered"]
+
+[connection signal="proximity" from="ladders/Ladder1" to="players" method="_on_Ladder_proximity"]
+
+[connection signal="proximity" from="ladders/Ladder1/Ladder2" to="players" method="_on_Ladder_proximity"]
 
 
