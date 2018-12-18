@@ -5,19 +5,17 @@ export (int) var speed = 750
 export (int) var max_range = 400
 export (int) var reload_duration = 1000
 var velocity = Vector2()
-var direction = ""
 var total_movement = 0
 
 func start(pos, dir):
-	if dir == "left":
+	if dir == data_types.LEFT:
 		velocity = Vector2(-1 * speed, 0)
 		pos += Vector2(-26, 0)
-	if dir == "right":
+	if dir == data_types.RIGHT:
 		velocity = Vector2(1 * speed, 0)
 		pos += Vector2(26, 0)
 		
 	position = pos
-	direction = dir
 
 func _physics_process(delta):
 	if total_movement > max_range:
@@ -33,7 +31,6 @@ func _physics_process(delta):
 		if collision.collider.has_method("hit"):
 			collision.collider.hit(damage)
 			queue_free()
-
 
 func reduce_damage(value):
 	damage -= value

@@ -4,6 +4,7 @@ extends Node
 enum Directions {UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3}
 
 class PlayerProps:
+	var velocity = Vector2()
 	var pos = Vector2()
 	var dir = UP
 

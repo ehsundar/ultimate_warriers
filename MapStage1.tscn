@@ -6,7 +6,7 @@
 [ext_resource path="res://Cave.tscn" type="PackedScene" id=4]
 [ext_resource path="res://game_info.gd" type="Script" id=5]
 
-[sub_resource type="ConvexPolygonShape2D" id=3]
+[sub_resource type="ConvexPolygonShape2D" id=1]
 
 custom_solver_bias = 0.0
 points = PoolVector2Array( -25, -25, 25, -25, 25, 25, -25, 25 )
@@ -16,15 +16,20 @@ points = PoolVector2Array( -25, -25, 25, -25, 25, 25, -25, 25 )
 flags = 4
 load_path = ""
 
-[sub_resource type="ConvexPolygonShape2D" id=4]
+[sub_resource type="ConvexPolygonShape2D" id=3]
 
 custom_solver_bias = 0.0
 points = PoolVector2Array( -25, -25, 25, -25, 25, 25, -25, 25 )
 
-[sub_resource type="ConvexPolygonShape2D" id=5]
+[sub_resource type="ConvexPolygonShape2D" id=4]
 
 custom_solver_bias = 0.0
 points = PoolVector2Array( 25, 25, -25, 25, 25, -25 )
+
+[sub_resource type="ConvexPolygonShape2D" id=5]
+
+custom_solver_bias = 0.0
+points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 
 [sub_resource type="ConvexPolygonShape2D" id=6]
 
@@ -44,12 +49,12 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 [sub_resource type="ConvexPolygonShape2D" id=9]
 
 custom_solver_bias = 0.0
-points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
+points = PoolVector2Array( -25, -25, 25, 25, -25, 25 )
 
 [sub_resource type="ConvexPolygonShape2D" id=10]
 
 custom_solver_bias = 0.0
-points = PoolVector2Array( -25, -25, 25, 25, -25, 25 )
+points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 
 [sub_resource type="ConvexPolygonShape2D" id=11]
 
@@ -61,12 +66,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 custom_solver_bias = 0.0
 points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 
-[sub_resource type="ConvexPolygonShape2D" id=13]
-
-custom_solver_bias = 0.0
-points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
-
-[sub_resource type="TileSet" id=14]
+[sub_resource type="TileSet" id=13]
 
 0/name = "Wall"
 0/texture = SubResource( 2 )
@@ -79,7 +79,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 0/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 3 ),
+"shape": SubResource( 1 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 25, 25 )
 } ]
 1/name = "Floor"
@@ -93,7 +93,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 1/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 4 ),
+"shape": SubResource( 3 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 25, 25 )
 } ]
 2/name = "RampUp"
@@ -107,7 +107,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 2/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 5 ),
+"shape": SubResource( 4 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 25, 25 )
 } ]
 3/name = "RampDown"
@@ -121,7 +121,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 3/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 10 ),
+"shape": SubResource( 9 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 25, 25 )
 } ]
 4/name = "Background"
@@ -144,7 +144,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 5/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 11 ),
+"shape": SubResource( 10 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 15, 15 )
 } ]
 6/name = "GrassFloorLeft"
@@ -158,7 +158,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 6/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 12 ),
+"shape": SubResource( 11 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 15, 15 )
 } ]
 7/name = "GrassFloorRight"
@@ -172,7 +172,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 7/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 13 ),
+"shape": SubResource( 12 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 15, 15 )
 } ]
 8/name = "GrassWallFront"
@@ -303,7 +303,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 21/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 6 ),
+"shape": SubResource( 5 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 15, 15 )
 } ]
 22/name = "InvisibleBodrer"
@@ -317,7 +317,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 22/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 7 ),
+"shape": SubResource( 6 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 15, 15 )
 } ]
 23/name = "InvisibleSafeBodrer"
@@ -331,7 +331,7 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 23/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 8 ),
+"shape": SubResource( 7 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 15, 15 )
 } ]
 24/name = "InvisibleKillBodrer"
@@ -345,37 +345,37 @@ points = PoolVector2Array( -15, -15, 15, -15, 15, 15, -15, 15 )
 24/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
-"shape": SubResource( 9 ),
+"shape": SubResource( 8 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 15, 15 )
 } ]
 _sections_unfolded = [ "9", "Resource" ]
 
-[sub_resource type="RectangleShape2D" id=15]
+[sub_resource type="RectangleShape2D" id=14]
 
 custom_solver_bias = 0.0
 extents = Vector2( 785, 10 )
 
-[sub_resource type="RectangleShape2D" id=16]
+[sub_resource type="RectangleShape2D" id=15]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 18.1228 )
 
-[sub_resource type="RectangleShape2D" id=17]
+[sub_resource type="RectangleShape2D" id=16]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 3.2 )
 
-[sub_resource type="RectangleShape2D" id=18]
+[sub_resource type="RectangleShape2D" id=17]
 
 custom_solver_bias = 0.0
 extents = Vector2( 5, 5 )
 
-[sub_resource type="RectangleShape2D" id=19]
+[sub_resource type="RectangleShape2D" id=18]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 54.3683 )
 
-[node name="world1" type="Node2D"]
+[node name="world1" type="Node2D" index="0"]
 
 _sections_unfolded = [ "Transform" ]
 
@@ -407,7 +407,7 @@ __meta__ = {
 
 z_index = -7
 mode = 0
-tile_set = SubResource( 14 )
+tile_set = SubResource( 13 )
 cell_size = Vector2( 30, 30 )
 cell_quadrant_size = 16
 cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
@@ -466,7 +466,7 @@ audio_bus_name = "Master"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="boundaries/boundary_lower" index="0"]
 
 position = Vector2( 785, 470 )
-shape = SubResource( 15 )
+shape = SubResource( 14 )
 
 [node name="ladders" type="Node2D" parent="." index="5"]
 
@@ -501,7 +501,7 @@ __meta__ = {
 
 position = Vector2( 0, -3.2 )
 scale = Vector2( 1, 1.05944 )
-shape = SubResource( 16 )
+shape = SubResource( 15 )
 
 [node name="LadderTop" type="Area2D" parent="ladders/Ladder1" index="1"]
 
@@ -522,7 +522,7 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ladders/Ladder1/LadderTop" index="0"]
 
 position = Vector2( 0, 19.2 )
-shape = SubResource( 17 )
+shape = SubResource( 16 )
 
 [node name="LadderBtm" type="Area2D" parent="ladders/Ladder1" index="2"]
 
@@ -541,7 +541,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ladders/Ladder1/LadderBtm" index="0"]
 
-shape = SubResource( 18 )
+shape = SubResource( 17 )
 
 [node name="Ladder2" type="Node2D" parent="ladders/Ladder1" index="3"]
 
@@ -573,7 +573,7 @@ __meta__ = {
 
 position = Vector2( 0, -3.2 )
 scale = Vector2( 1, 1.05944 )
-shape = SubResource( 19 )
+shape = SubResource( 18 )
 
 [node name="LadderTop" type="Area2D" parent="ladders/Ladder1/Ladder2" index="1"]
 
@@ -594,7 +594,7 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ladders/Ladder1/Ladder2/LadderTop" index="0"]
 
 position = Vector2( 0, 19.2 )
-shape = SubResource( 17 )
+shape = SubResource( 16 )
 
 [node name="LadderBtm" type="Area2D" parent="ladders/Ladder1/Ladder2" index="2"]
 
@@ -613,7 +613,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ladders/Ladder1/Ladder2/LadderBtm" index="0"]
 
-shape = SubResource( 18 )
+shape = SubResource( 17 )
 
 [node name="caves" type="Node2D" parent="." index="6"]
 

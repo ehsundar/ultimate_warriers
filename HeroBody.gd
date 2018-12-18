@@ -20,10 +20,8 @@ var reload_duration = 1000
 var velocity = Vector2()
 var jumping = false
 var health = 100
-var head = "right"
 var current_animation_state = "stand"
 var last_shoot = 0
-var last_update = 0
 var hero_killed = true
 var can_shoot = true
 var in_cave = false
@@ -34,8 +32,6 @@ var direction = data_types.RIGHT
 
 slave var slave_velocity = Vector2();
 slave var slave_position = Vector2();
-slave var slave_animation = "";
-slave var slave_direction = data_types.RIGHT
 
 
 func _ready():
@@ -44,9 +40,7 @@ func _ready():
 
 
 func _process(delta):
-	if OS.get_ticks_msec() - last_update > 100:
-		last_update = OS.get_ticks_msec()
-		update()
+	update()
 
 
 func _physics_process(delta):
@@ -54,6 +48,8 @@ func _physics_process(delta):
 		return
 	
 	if is_network_master():
+		update_animation_state()
+		
 		var right = Input.is_action_pressed('ui_right')
 		var left = Input.is_action_pressed('ui_left')
 		var up = Input.is_action_pressed('ui_up')
@@ -64,14 +60,15 @@ func _physics_process(delta):
 		if not delegated_movement:
 			velocity.x = 0
 			
+			if is_on_floor():
+				jumping = false
+			
 			if up:
 				if is_on_floor():
 					if in_front_of_cave != null:
 						enter_cave(in_front_of_cave)
 					else:
 						velocity.y = -jump_speed
-			elif is_on_floor():
-				jumping = false
 				
 			if down:
 				if in_cave:
@@ -79,10 +76,12 @@ func _physics_process(delta):
 				
 			if right:
 				velocity.x += run_speed
-				direction = data_types.RIGHT
+				if direction != data_types.RIGHT:
+					rpc("set_direction", data_types.RIGHT)
 			if left:
 				velocity.x -= run_speed
-				direction = data_types.LEFT
+				if direction != data_types.LEFT:
+					rpc("set_direction", data_types.LEFT)
 			
 			velocity.y += gravity * delta
 			velocity = move_and_slide(velocity, Vector2(0, -1))
@@ -95,15 +94,16 @@ func _physics_process(delta):
 			
 		rset("slave_position", position)
 		rset("slave_velocity", velocity)
-		rset("slave_direction", direction)
 	else:
 		position = slave_position
 		velocity = slave_velocity
-		direction = slave_direction
 	
 	if health <= 0 and not hero_killed:
 		rpc("kill")
-	update_animation_state()
+
+
+sync func set_direction(dir):
+	direction = dir
 
 
 func set_player_name(player_name):
@@ -118,41 +118,40 @@ func update_animation_state():
 	if delegated_movement:
 		set_animation_state("ladder")
 		return
-		
-	if velocity.y != 0 and not delegated_movement:
-		if velocity.y < 0:
-			set_animation_state("jump_up")
+	else:
+		if is_on_floor():
+			if OS.get_ticks_msec() - last_shoot > 500:
+				if velocity.length() == 0:
+					if direction == data_types.RIGHT:
+						set_animation_state("stand")
+					if direction == data_types.LEFT:
+						set_animation_state("stand_left")
+				else:
+					if direction == data_types.RIGHT:
+						set_animation_state("walk")
+					if direction == data_types.LEFT:
+						set_animation_state("walk_left")
 		else:
-			set_animation_state("jump_down")
-		return
-	
-	if is_on_floor() and not delegated_movement:
-		if OS.get_ticks_msec() - last_shoot > 400:
-			if velocity.length() < 0.01:
-				set_animation_state("stand")
+			if velocity.y < 0:
+				set_animation_state("jump_up")
 			else:
-				if direction == data_types.RIGHT:
-					set_animation_state("walk")
-				if direction == data_types.LEFT:
-					set_animation_state("walk_left")
+				set_animation_state("jump_down")
 
 
 sync func set_anim(state):
 	current_animation_state = state
-	$AnimatedSprite.play(current_animation_state)
+	get_node("AnimatedSprite").play(current_animation_state)
 
 func set_animation_state(state):
 	if current_animation_state != state:
 		rpc("set_anim", state)
-		current_animation_state = state
-		$AnimatedSprite.play(current_animation_state)
 
 
-sync func apply_shoot(pos, direction):
+sync func apply_shoot(pos, dir):
 	last_shoot = OS.get_ticks_msec()
 	set_animation_state("attack")
 	var bullet = CurrentBullet.instance()
-	bullet.start(pos, direction)
+	bullet.start(pos, dir)
 	get_parent().add_child(bullet)
 	reload_duration = bullet.reload_duration
 
@@ -160,11 +159,9 @@ sync func apply_shoot(pos, direction):
 func shoot():
 	if not can_shoot:
 		return
-		
 	if OS.get_ticks_msec() - last_shoot < reload_duration:
 		return
-	
-	rpc("apply_shoot", position, head)
+	rpc("apply_shoot", position, direction)
 
 
 sync func apply_damage(damage):
@@ -281,9 +278,7 @@ func enable_movement():
 
 func disable_shooting():
 	can_shoot = false
-	pass
 	
 	
 func enable_shooting():
 	can_shoot = true
-	pass
