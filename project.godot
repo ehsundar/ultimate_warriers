@@ -17,6 +17,7 @@ config/icon="res://game_icon.png"
 [autoload]
 
 game_state="*res://game_state.gd"
+data_types="*res://data_types.gd"
 
 [display]
 

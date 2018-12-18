@@ -30,10 +30,12 @@ var in_cave = false
 var in_front_of_cave = null #Vector2
 
 var delegated_movement = false;
+var direction = data_types.RIGHT
 
 slave var slave_velocity = Vector2();
 slave var slave_position = Vector2();
 slave var slave_animation = "";
+slave var slave_direction = data_types.RIGHT
 
 
 func _ready():
@@ -42,11 +44,6 @@ func _ready():
 
 
 func _process(delta):
-	if head == "left":
-		$AnimatedSprite.flip_h = true
-	if head == "right":
-		$AnimatedSprite.flip_h = false
-	
 	if OS.get_ticks_msec() - last_update > 100:
 		last_update = OS.get_ticks_msec()
 		update()
@@ -82,10 +79,10 @@ func _physics_process(delta):
 				
 			if right:
 				velocity.x += run_speed
-				head = "right"
+				direction = data_types.RIGHT
 			if left:
 				velocity.x -= run_speed
-				head = "left"
+				direction = data_types.LEFT
 			
 			velocity.y += gravity * delta
 			velocity = move_and_slide(velocity, Vector2(0, -1))
@@ -98,9 +95,11 @@ func _physics_process(delta):
 			
 		rset("slave_position", position)
 		rset("slave_velocity", velocity)
+		rset("slave_direction", direction)
 	else:
 		position = slave_position
 		velocity = slave_velocity
+		direction = slave_direction
 	
 	if health <= 0 and not hero_killed:
 		rpc("kill")
@@ -132,9 +131,10 @@ func update_animation_state():
 			if velocity.length() < 0.01:
 				set_animation_state("stand")
 			else:
-				set_animation_state("walk")
-				$AnimatedSprite.flip_h = velocity.x > 0
-			return
+				if direction == data_types.RIGHT:
+					set_animation_state("walk")
+				if direction == data_types.LEFT:
+					set_animation_state("walk_left")
 
 
 sync func set_anim(state):
@@ -143,9 +143,18 @@ sync func set_anim(state):
 
 func set_animation_state(state):
 	if current_animation_state != state:
-#		rpc("set_anim", new_animation_state)
+		rpc("set_anim", state)
 		current_animation_state = state
 		$AnimatedSprite.play(current_animation_state)
+
+
+sync func apply_shoot(pos, direction):
+	last_shoot = OS.get_ticks_msec()
+	set_animation_state("attack")
+	var bullet = CurrentBullet.instance()
+	bullet.start(pos, direction)
+	get_parent().add_child(bullet)
+	reload_duration = bullet.reload_duration
 
 
 func shoot():
@@ -154,13 +163,8 @@ func shoot():
 		
 	if OS.get_ticks_msec() - last_shoot < reload_duration:
 		return
-	last_shoot = OS.get_ticks_msec()
 	
-	set_animation_state("attack")
-	var bullet = CurrentBullet.instance()
-	bullet.start(position, head)
-	get_parent().add_child(bullet)
-	reload_duration = bullet.reload_duration
+	rpc("apply_shoot", position, head)
 
 
 sync func apply_damage(damage):
@@ -235,7 +239,7 @@ sync func apply_delegated_mv(value):
 	delegated_movement = value
 
 func set_delegated_movement(value):
-	rpc("apply_delegated_mv")
+	rpc("apply_delegated_mv", value)
 
 
 func hero_body_verify():
