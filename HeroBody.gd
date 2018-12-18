@@ -5,10 +5,10 @@ export (int) var default_jump_speed = 400
 export (int) var default_gravity = 1200
 export (Vector2) var default_spawn_position = Vector2(100, 100)
 
-var	run_speed = default_run_speed
-var	jump_speed = default_jump_speed
-var	gravity = default_gravity
-var	spawn_position = default_spawn_position
+var run_speed = default_run_speed
+var jump_speed = default_jump_speed
+var gravity = default_gravity
+var spawn_position = default_spawn_position
 
 
 var BulletSmall = preload("BulletSmall.tscn")
@@ -31,6 +31,9 @@ var in_front_of_cave = null #Vector2
 
 var delegated_movement = false;
 
+slave var slave_velocity = Vector2();
+slave var slave_position = Vector2();
+
 
 func _ready():
 	spawn()
@@ -48,8 +51,11 @@ func _process(delta):
 		update()
 
 
-func _physics_process(delta):	
-	if health > 0:
+func _physics_process(delta):
+	if hero_killed:
+		return
+	
+	if is_network_master():
 		var right = Input.is_action_pressed('ui_right')
 		var left = Input.is_action_pressed('ui_left')
 		var up = Input.is_action_pressed('ui_up')
@@ -88,8 +94,14 @@ func _physics_process(delta):
 		
 		if select:
 			shoot()
+			
+		rset("slave_position", position)
+		rset("slave_velocity", velocity)
 	else:
-		# health negative
+		position = slave_position
+		velocity = slave_velocity
+	
+	if health < 0:
 		kill()
 	
 	update_animation_state()
@@ -102,6 +114,10 @@ func set_player_name(player_name):
 func update_animation_state():
 	if health == 0:
 		set_animation_state("dead")
+		return
+		
+	if delegated_movement:
+		set_animation_state("ladder")
 		return
 		
 	if velocity.y != 0 and not delegated_movement:

@@ -54,7 +54,7 @@ animations = [ {
 custom_solver_bias = 0.0
 extents = Vector2( 14.8018, 21.2255 )
 
-[node name="player" type="KinematicBody2D" index="0"]
+[node name="player" type="KinematicBody2D"]
 
 input_pickable = false
 collision_layer = 1
