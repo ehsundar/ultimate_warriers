@@ -33,6 +33,7 @@ var delegated_movement = false;
 
 slave var slave_velocity = Vector2();
 slave var slave_position = Vector2();
+slave var slave_animation = "";
 
 
 func _ready():
@@ -101,9 +102,8 @@ func _physics_process(delta):
 		position = slave_position
 		velocity = slave_velocity
 	
-	if health < 0:
-		kill()
-	
+	if health <= 0 and not hero_killed:
+		rpc("kill")
 	update_animation_state()
 
 
@@ -112,7 +112,7 @@ func set_player_name(player_name):
 
 
 func update_animation_state():
-	if health == 0:
+	if health <= 0:
 		set_animation_state("dead")
 		return
 		
@@ -133,13 +133,18 @@ func update_animation_state():
 				set_animation_state("stand")
 			else:
 				set_animation_state("walk")
+				$AnimatedSprite.flip_h = velocity.x > 0
 			return
 
 
-func set_animation_state(new_animation_state):
-	if current_animation_state != new_animation_state:
-		current_animation_state = new_animation_state
-#		print(new_animation_state)
+sync func set_anim(state):
+	current_animation_state = state
+	$AnimatedSprite.play(current_animation_state)
+
+func set_animation_state(state):
+	if current_animation_state != state:
+#		rpc("set_anim", new_animation_state)
+		current_animation_state = state
 		$AnimatedSprite.play(current_animation_state)
 
 
@@ -158,16 +163,20 @@ func shoot():
 	reload_duration = bullet.reload_duration
 
 
-func hit(damage):
-#	print("damage ", damage)
+sync func apply_damage(damage):
 	health -= damage
 	if health <= 0:
-		kill()
+		rpc("kill")
 	update()
+
+func hit(damage):
+	rpc("apply_damage", damage)
 
 
 func _draw():
 	set_as_toplevel(true)
+	if health < 0:
+		health = 0
 	var draw_bar_x = -15
 	var draw_bar_y = -30
 	draw_rect(Rect2(draw_bar_x, draw_bar_y, 30, 3), Color(1.0, 0.0, 0.0), false)
@@ -182,7 +191,7 @@ func _draw():
 	draw_rect(Rect2(draw_bar_x, draw_bar_y, time_rem, 3), Color(0.0, 1.0, 0.0), true)
 
 
-func kill():
+sync func kill():
 	if hero_killed:
 		return
 	hero_killed = true
@@ -190,12 +199,13 @@ func kill():
 	$RespawnTimer.start()
 
 
-func spawn():
-	if not hero_killed:
-		return
+sync func apply_spawn():
 	hero_killed = false
 	global_position = spawn_position
 	health = 100
+
+func spawn():
+	rpc("apply_spawn")
 
 
 func upgrade_weapon(level=1, absolute=false):
@@ -221,8 +231,11 @@ func upgrade_weapon(level=1, absolute=false):
 		CurrentBullet = BulletSmall
 
 
-func set_delegated_movement(value):
+sync func apply_delegated_mv(value):
 	delegated_movement = value
+
+func set_delegated_movement(value):
+	rpc("apply_delegated_mv")
 
 
 func hero_body_verify():

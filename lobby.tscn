@@ -2,7 +2,7 @@
 
 [ext_resource path="res://lobby.gd" type="Script" id=1]
 
-[node name="lobby" type="Control" index="0"]
+[node name="lobby" type="Control"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -241,7 +241,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 1
 size_flags_horizontal = 1
 size_flags_vertical = 1
-text = "127.0.0.1"
+text = "192.168.43.232"
 focus_mode = 2
 context_menu_enabled = true
 placeholder_alpha = 0.6
