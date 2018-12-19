@@ -99,7 +99,7 @@ func _physics_process(delta):
 		velocity = slave_velocity
 	
 	if health <= 0 and not hero_killed:
-		rpc("kill")
+		kill()
 
 
 sync func set_direction(dir):
@@ -167,7 +167,7 @@ func shoot():
 sync func apply_damage(damage):
 	health -= damage
 	if health <= 0:
-		rpc("kill")
+		kill()
 	update()
 
 func hit(damage):
@@ -192,12 +192,16 @@ func _draw():
 	draw_rect(Rect2(draw_bar_x, draw_bar_y, time_rem, 3), Color(0.0, 1.0, 0.0), true)
 
 
-sync func kill():
+sync func apply_kill():
 	if hero_killed:
 		return
 	hero_killed = true
 	health = 0
 	$RespawnTimer.start()
+	set_animation_state("dead")
+
+func kill():
+	rpc("apply_kill")
 
 
 sync func apply_spawn():

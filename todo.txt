@@ -1,0 +1,20 @@
+TODO:
+
+- create scene for ladder:
+    -- BaseLadder
+    -- Ladder3
+    -- Ladder4
+    -- Ladder6
+    -- Ladder7
+
+- create scene for cave:
+    - extract from tile map
+
+- create scene for chest:
+    - add functionality to chest
+    
+- set lobby background
+
+- fix movement on ladder:
+    -- top small bug
+    -- transfer movement logic to ladder class
