@@ -1,84 +1,101 @@
 extends Node
 
 
-var caves = {}
-var cave_adjacent = {}
+var caves = {} # cave_id: cave_tree
+var cave_adjacent = {} # cave_id: hero_id
+var cave_entered = {} # cave_id: hero_id
 
-var hero_bodies = []
+var heros = {} # hero_id: hero_tree
 var master_hero = null;
 
 
-func register_cave(cave_tree):
-	assert(not cave_tree in caves)
-	caves[cave_tree] = null
+func register_cave(cave):
+	assert(not cave in caves.values())
+	assert(not cave.cave_id in caves.keys())
+	assert(cave.cave_id > 0)
+	
+	caves[cave.cave_id] = cave
+	cave_adjacent[cave.cave_id] = null
+	cave_entered[cave.cave_id] = null
 
 
-func register_hero(hero_body):
-	hero_bodies.append(hero_body)
-	cave_adjacent[hero_body] = null
+func register_hero(hero_id, hero_body):
+	print(hero_body.hero_name, ': ', hero_id)
+	heros[hero_id] = hero_body
 	if hero_body.is_network_master():
 		master_hero = hero_body
 
 
 func enter_cave_area(cave, hero_body):
-	assert(cave in caves)
-	assert(hero_body in hero_bodies)
-	cave_adjacent[hero_body] = cave
+	assert(cave in caves.values())
+	assert(hero_body in heros.values())
+	cave_adjacent[cave.cave_id] = _get_id_for_hero(hero_body)
 
 
 func exit_cave_area(cave, hero_body):
-	assert(cave in caves)
-	assert(hero_body in hero_bodies)
-	cave_adjacent[hero_body] = null
+	assert(cave in caves.values())
+	assert(hero_body in heros.values())
+	cave_adjacent[cave.cave_id] = null
 
 
 func can_enter_any_cave(hero_body):
-	assert(hero_body in hero_bodies)
-	return cave_adjacent[hero_body] != null
+	assert(hero_body in heros.values())
+	var hero_id = _get_id_for_hero(hero_body)
+	for cave_id in cave_adjacent.keys():
+		if cave_adjacent[cave_id] == hero_id:
+			return true
+	return false
 
 
-sync func enter_the_cave_helper(hero_body):
-	assert(hero_body in hero_bodies)
-	var cave = cave_adjacent[hero_body]
-	assert(cave != null)
+sync func enter_the_cave_helper(hero_id, cave_id):
+	assert(hero_id in heros.keys())
+	assert(cave_id in caves.keys())
+	var cave = caves[cave_id]
 	
-	if caves[cave] == null:
-		caves[cave] = hero_body
-		hero_body.enter_cave(cave)
+	if cave_entered[cave_id] == null:
+		cave_entered[cave_id] = hero_id
+		heros[hero_id].enter_cave(cave)
 	else:
-		caves[cave].exit_cave(cave)
-	_debug_print_all_caves()
+		print('someone else were in cave')
+		var hero_in_cave = cave_entered[cave_id]
+		heros[hero_in_cave].exit_cave(cave)
+
 
 func enter_the_cave(hero_body):
-	rpc("enter_the_cave_helper", hero_body)
+	var hero_id = _get_id_for_hero(hero_body)
+	var target_cave = -1;
+	for cave_id in cave_adjacent.keys():
+		if cave_adjacent[cave_id] == hero_id:
+			target_cave = cave_id
+	if (target_cave == -1):
+		print('there is not target cave to enter: ', hero_id)
+		return
+	rpc("enter_the_cave_helper", hero_id, target_cave)
 
 
-sync func exit_the_cave_helper(hero_body):
-	assert(hero_body in hero_bodies)
-	var cave = _hero_in_which_cave(hero_body)
-	assert(cave != null)
+sync func exit_the_cave_helper(hero_id, cave_id):
+	assert(hero_id in heros.keys())
+	assert(cave_id in caves.keys())
 	
-	hero_body.exit_cave(cave)
-	caves[cave] = null
-	
-	_debug_print_all_caves()
+	cave_entered[cave_id] = null
+	heros[hero_id].exit_cave(caves[cave_id])
+
 
 func exit_the_cave(hero_body):
-	rpc("exit_the_cave_helper", hero_body)
+	var hero_id = _get_id_for_hero(hero_body)
+	var target_cave = -1;
+	for cave_id in cave_entered.keys():
+		if cave_entered[cave_id] == hero_id:
+			target_cave = cave_id
+	if (target_cave == -1):
+		print('there is not target cave to exit: ', hero_id)
+		return
+	rpc("exit_the_cave_helper", hero_id, target_cave)
 
 
-func _hero_in_which_cave(hero_body):
-	assert(hero_body in hero_bodies)
-	for cave in caves.keys():
-		if caves[cave] == hero_body:
-			return cave
-	return null
-	
-	
-func _debug_print_all_caves():
-	print("--debug cave values:")
-	for cave in caves.keys():
-		print(cave, ": ", caves[cave])
-	print("------")
-
+func _get_id_for_hero(hero_body):
+	for hero_id in heros.keys():
+		if heros[hero_id] == hero_body:
+			return hero_id
+	assert(false)
 

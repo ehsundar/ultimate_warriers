@@ -624,6 +624,7 @@ _sections_unfolded = [ "Transform" ]
 [node name="Cave" parent="caves" index="0" instance=ExtResource( 5 )]
 
 position = Vector2( 720, 230 )
+cave_id = 1
 
 [node name="game_info" type="CanvasLayer" parent="." index="7"]
 

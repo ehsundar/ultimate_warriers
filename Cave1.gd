@@ -1,9 +1,9 @@
 extends Node2D
 
-var inside_hero
+export var cave_id = -1;
 
 
-func _init():
+func _ready():
 	MapState.register_cave(self)
 
 

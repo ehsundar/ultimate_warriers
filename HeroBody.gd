@@ -35,10 +35,6 @@ slave var slave_velocity = Vector2();
 slave var slave_position = Vector2();
 
 
-func _init():
-	MapState.register_hero(self)
-
-
 func _ready():
 	spawn()
 	update()
@@ -257,7 +253,7 @@ func hero_body_verify():
 	pass
 
 
-sync func apply_enter_cave(cave):
+func apply_enter_cave(cave):
 	self.position = cave.position
 	hide()
 	disable_movement()
@@ -266,10 +262,11 @@ sync func apply_enter_cave(cave):
 	in_cave = true
 
 func enter_cave(cave):
-	rpc("apply_enter_cave", cave)
+	# rpc("apply_enter_cave", cave)
+	apply_enter_cave(cave)
 	
 
-sync func apply_exit_cave(cave):
+func apply_exit_cave(cave):
 	show()
 	enable_movement()
 	enable_shooting()
@@ -277,7 +274,8 @@ sync func apply_exit_cave(cave):
 	in_cave = false
 
 func exit_cave(cave):
-	rpc("apply_exit_cave", cave)
+	# rpc("apply_exit_cave", cave)
+	apply_exit_cave(cave)
 
 
 func disable_movement():

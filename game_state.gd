@@ -111,7 +111,7 @@ remote func pre_start_game(spawn_points):
 			player.get_node("Camera2D").queue_free()
 
 		world.get_node("players").add_child(player)
-		# MapState.register_hero(player)
+		MapState.register_hero(p_id, player)
 
 	# TODO
 	# Set up score
