@@ -5,11 +5,10 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 30, 30 )
+extents = Vector2( 10, 10 )
 
 [node name="Cave" type="Node2D"]
 
-editor/display_folded = true
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 

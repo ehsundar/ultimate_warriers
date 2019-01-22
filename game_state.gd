@@ -91,22 +91,27 @@ remote func pre_start_game(spawn_points):
 	var player_scene = load("res://HeroBody.tscn")
 
 	for p_id in spawn_points:
-		var spawn_pos = world.get_node("spawn_points/spawn" + str(spawn_points[p_id])).position
+		var spawn_name = "spawn_points/spawn" + str(spawn_points[p_id])
+		var spawn_pos = world.get_node(spawn_name).position
 		var player = player_scene.instance()
 
-		player.set_name(str(p_id)) # Use unique ID as node name
+		player.hero_name = (str(p_id)) # Use unique ID as node name
 		player.spawn_position = spawn_pos
 		player.set_network_master(p_id) #set unique id as master
 
 		if p_id == get_tree().get_network_unique_id():
 			# If node for this peer id, set name
-			player.set_player_name(player_name)
+			#player.set_player_name(player_name)
+			player.hero_name = player_name
+			#MapState.master_hero = player
 		else:
 			# Otherwise set name from peer
-			player.set_player_name(players[p_id])
+			#player.set_player_name(players[p_id])
+			player.hero_name = players[p_id]
 			player.get_node("Camera2D").queue_free()
 
 		world.get_node("players").add_child(player)
+		# MapState.register_hero(player)
 
 	# TODO
 	# Set up score
@@ -158,10 +163,11 @@ func get_player_name():
 func begin_game():
 	assert(get_tree().is_network_server())
 
-	# Create a dictionary with peer id and respective spawn points, could be improved by randomizing
+	# Create a dictionary with peer id and respective spawn points
+	# could be improved by randomizing
 	var spawn_points = {}
 	spawn_points[1] = 1 # Server in spawn point 0
-	var spawn_point_idx = 1
+	var spawn_point_idx = 2
 	for p in players:
 		spawn_points[p] = spawn_point_idx
 		spawn_point_idx += 1

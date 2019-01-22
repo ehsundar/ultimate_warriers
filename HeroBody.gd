@@ -9,6 +9,7 @@ var run_speed = default_run_speed
 var jump_speed = default_jump_speed
 var gravity = default_gravity
 var spawn_position = default_spawn_position
+var hero_name = "No Name"
 
 
 var BulletSmall = preload("BulletSmall.tscn")
@@ -34,6 +35,10 @@ slave var slave_velocity = Vector2();
 slave var slave_position = Vector2();
 
 
+func _init():
+	MapState.register_hero(self)
+
+
 func _ready():
 	spawn()
 	update()
@@ -56,7 +61,7 @@ func _physics_process(delta):
 		var down = Input.is_action_just_pressed('ui_down')
 		var cheat_up_weapon = Input.is_action_just_pressed("cheat_upgrade_weapon")
 		var select = Input.is_action_just_pressed("ui_select")
-			
+		
 		if not delegated_movement:
 			velocity.x = 0
 			
@@ -65,14 +70,14 @@ func _physics_process(delta):
 			
 			if up:
 				if is_on_floor():
-					if in_front_of_cave != null:
-						enter_cave(in_front_of_cave)
+					if MapState.can_enter_any_cave(self):
+						MapState.enter_the_cave(self)
 					else:
 						velocity.y = -jump_speed
 				
 			if down:
 				if in_cave:
-					exit_from_cave()
+					MapState.exit_the_cave(self)
 				
 			if right:
 				velocity.x += run_speed
@@ -87,7 +92,7 @@ func _physics_process(delta):
 			velocity = move_and_slide(velocity, Vector2(0, -1))
 	
 		if cheat_up_weapon:
-			upgrade_weapon()
+			rpc('upgrade_weapon')
 		
 		if select:
 			shoot()
@@ -107,7 +112,8 @@ sync func set_direction(dir):
 
 
 func set_player_name(player_name):
-	get_node("label").text = player_name
+	pass
+	#get_node("label").text = player_name
 
 
 func update_animation_state():
@@ -205,6 +211,7 @@ func kill():
 
 
 sync func apply_spawn():
+	$PlayerName.text = hero_name
 	hero_killed = false
 	global_position = spawn_position
 	health = 100
@@ -213,7 +220,7 @@ func spawn():
 	rpc("apply_spawn")
 
 
-func upgrade_weapon(level=1, absolute=false):
+sync func upgrade_weapon(level=1, absolute=false):
 	if absolute:
 		if level == 1:
 			CurrentBullet = BulletSmall
@@ -250,23 +257,29 @@ func hero_body_verify():
 	pass
 
 
-func enter_cave(cave_position):
-	self.position = cave_position
+sync func apply_enter_cave(cave):
+	self.position = cave.position
 	hide()
 	disable_movement()
 	disable_shooting()
 	$CollisionShape2D.disabled = true
 	in_cave = true
+
+func enter_cave(cave):
+	rpc("apply_enter_cave", cave)
 	
-	
-func exit_from_cave():
+
+sync func apply_exit_cave(cave):
 	show()
 	enable_movement()
 	enable_shooting()
 	$CollisionShape2D.disabled = false
 	in_cave = false
-	
-	
+
+func exit_cave(cave):
+	rpc("apply_exit_cave", cave)
+
+
 func disable_movement():
 	run_speed = 0
 	jump_speed = 0

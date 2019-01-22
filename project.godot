@@ -18,6 +18,7 @@ config/icon="res://game_icon.png"
 
 game_state="*res://game_state.gd"
 data_types="*res://data_types.gd"
+MapState="*res://map_state.gd"
 
 [display]
 
