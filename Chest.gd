@@ -17,10 +17,10 @@ func _on_Area2D_body_entered(body):
 		return
 	if body.has_method("hero_body_verify"):
 		var hero_id = MapState._get_id_for_hero(body)
-		rpc("_consume_chest", hero_id)
+		_consume_chest(hero_id)
 
 
-sync func _consume_chest(hero_id):
+func _consume_chest(hero_id):
 	opened = true
 	$SpriteClosed.hide()
 	$SpriteOpened.show()

@@ -4,6 +4,8 @@ export (int) var default_run_speed = 200
 export (int) var default_jump_speed = 400
 export (int) var default_gravity = 1200
 export (Vector2) var default_spawn_position = Vector2(100, 100)
+export (int) var posion_amount = 30
+
 
 var run_speed = default_run_speed
 var jump_speed = default_jump_speed
@@ -11,22 +13,25 @@ var gravity = default_gravity
 var spawn_position = default_spawn_position
 var hero_name = "No Name"
 
-
 var BulletSmall = preload("BulletSmall.tscn")
 var BulletMedium = preload("BulletMedium.tscn")
 var BulletLarge = preload("BulletLarge.tscn")
-var CurrentBullet = BulletSmall
+var bullet_level = 1
 var reload_duration = 1000
 
 var velocity = Vector2()
 var jumping = false
-var health = 100
 var current_animation_state = "stand"
 var last_shoot = 0
-var hero_killed = true
 var can_shoot = true
+
 var in_cave = false
 var in_front_of_cave = null #Vector2
+
+var health = 100
+var hero_killed = true
+var coins = 0
+var posion_count = 0
 
 var delegated_movement = false;
 var direction = data_types.RIGHT
@@ -38,6 +43,10 @@ slave var slave_position = Vector2();
 func _ready():
 	spawn()
 	update()
+	update_player_status('this is ' + hero_name)
+	update_posion_count()
+	update_bullet_status()
+	update_health_status()
 
 
 func _process(delta):
@@ -55,7 +64,8 @@ func _physics_process(delta):
 		var left = Input.is_action_pressed('ui_left')
 		var up = Input.is_action_pressed('ui_up')
 		var down = Input.is_action_just_pressed('ui_down')
-		var cheat_up_weapon = Input.is_action_just_pressed("cheat_upgrade_weapon")
+		var up_weapon = Input.is_action_just_pressed("upgrade_weapon")
+		var up_health = Input.is_action_just_pressed("upgrade_health")
 		var select = Input.is_action_just_pressed("ui_select")
 		
 		if not delegated_movement:
@@ -87,8 +97,11 @@ func _physics_process(delta):
 			velocity.y += gravity * delta
 			velocity = move_and_slide(velocity, Vector2(0, -1))
 	
-		if cheat_up_weapon:
-			rpc('upgrade_weapon')
+		if up_weapon:
+			upgrade_bullet()
+			
+		if up_health:
+			upgrade_health()
 		
 		if select:
 			shoot()
@@ -149,10 +162,22 @@ func set_animation_state(state):
 		rpc("set_anim", state)
 
 
+func get_bullet():
+	assert(bullet_level > 0)
+	assert(bullet_level < 4)
+	
+	if bullet_level == 1:
+		return BulletSmall
+	if bullet_level == 2:
+		return BulletMedium
+	if bullet_level == 3:
+		return BulletLarge
+
+
 sync func apply_shoot(pos, dir):
 	last_shoot = OS.get_ticks_msec()
 	set_animation_state("attack")
-	var bullet = CurrentBullet.instance()
+	var bullet = get_bullet().instance()
 	bullet.start(pos, dir)
 	get_parent().add_child(bullet)
 	reload_duration = bullet.reload_duration
@@ -171,6 +196,7 @@ sync func apply_damage(damage):
 	if health <= 0:
 		kill()
 	update()
+	update_health_status()
 
 func hit(damage):
 	rpc("apply_damage", damage)
@@ -201,6 +227,7 @@ sync func apply_kill():
 	health = 0
 	$RespawnTimer.start()
 	set_animation_state("dead")
+	update_health_status()
 
 func kill():
 	rpc("apply_kill")
@@ -216,34 +243,28 @@ func spawn():
 	rpc("apply_spawn")
 
 
-sync func upgrade_weapon(level=1, absolute=false):
-	if absolute:
-		if level == 1:
-			CurrentBullet = BulletSmall
-			return
-		if level == 2:
-			CurrentBullet = BulletMedium
-			return
-		if level == 3:
-			CurrentBullet = BulletLarge
-			return
-	else:
-		if CurrentBullet == BulletSmall:
-			CurrentBullet = BulletMedium
-			return
-		if CurrentBullet == BulletMedium:
-			CurrentBullet = BulletLarge
-			return
-		if CurrentBullet == BulletLarge:
-			return
-		CurrentBullet = BulletSmall
+sync func upgrade_bullet_helper(value):
+	bullet_level = value
+
+func upgrade_bullet():
+	if bullet_level < 3:
+		bullet_level += 1
+		update_bullet_status()
+		rpc("upgrade_bullet_helper", bullet_level)
 
 
-sync func apply_delegated_mv(value):
+func upgrade_health():
+	if posion_count > 0:
+		posion_count -= 1
+		update_posion_count()
+		rpc('add_health', posion_amount)
+
+
+sync func apply_delegated_movement(value):
 	delegated_movement = value
 
 func set_delegated_movement(value):
-	rpc("apply_delegated_mv", value)
+	rpc("apply_delegated_movement", value)
 
 
 func hero_body_verify():
@@ -293,7 +314,47 @@ func enable_movement():
 
 func disable_shooting():
 	can_shoot = false
-	
-	
+
+
 func enable_shooting():
 	can_shoot = true
+
+
+func add_posion():
+	if posion_count < 3:
+		posion_count += 1
+		update_posion_count()
+
+
+sync func add_health(amount):
+	health += amount
+	if health > 100:
+		health = 100
+	update_health_status()
+
+
+func update_player_status(text):
+	if is_network_master():
+		game_state.world.get_node("GameUi").set_name(text)
+
+
+func update_posion_count():
+	if is_network_master():
+		game_state.world.get_node("GameUi").set_posion_count(posion_count)
+
+
+func update_bullet_status():
+	if is_network_master():
+		game_state.world.get_node("GameUi").set_bullet(bullet_level)
+
+
+func update_health_status():
+	if is_network_master():
+		game_state.world.get_node("GameUi").set_health(health)
+
+
+
+
+
+
+

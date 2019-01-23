@@ -102,11 +102,14 @@ func exit_the_cave(hero_body):
 
 
 func add_health_posion(hero_id):
-	pass
-
+	heros[hero_id].add_posion()
+	print('player ' + str(hero_id) + ' got a posion')
+		
 
 func add_coin(hero_id, content_amount):
-	pass
+	# rpc('add_coin_helper', hero_id, content_amount)
+	heros[hero_id].coins += content_amount
+	print('player ' + str(hero_id) + ' got a posion')
 
 
 func _get_id_for_hero(hero_body):

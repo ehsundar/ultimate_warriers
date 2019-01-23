@@ -12,6 +12,8 @@ var player_name = "The Warrior"
 # Names for remote players in id:name format
 var players = {}
 
+var world = null
+
 # Signals to let lobby GUI know what's going on
 signal player_list_changed()
 signal connection_failed()
@@ -84,7 +86,7 @@ remote func unregister_player(id):
 
 remote func pre_start_game(spawn_points):
 	# Change scene
-	var world = load("res://MapStage1.tscn").instance()
+	world = load("res://MapStage1.tscn").instance()
 	get_tree().get_root().add_child(world)
 	get_tree().get_root().get_node("lobby").hide()
 
