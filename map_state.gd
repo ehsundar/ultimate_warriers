@@ -8,6 +8,8 @@ var cave_entered = {} # cave_id: hero_id
 var heros = {} # hero_id: hero_tree
 var master_hero = null;
 
+var chests = {} # chest_id: chest_tree
+
 
 func register_cave(cave):
 	assert(not cave in caves.values())
@@ -24,6 +26,12 @@ func register_hero(hero_id, hero_body):
 	heros[hero_id] = hero_body
 	if hero_body.is_network_master():
 		master_hero = hero_body
+
+
+func register_chest(chest):
+	assert(not chest in chests.values())
+	assert(not chest.id in chests.keys())
+	chests[chest.id] = chest
 
 
 func enter_cave_area(cave, hero_body):
@@ -91,6 +99,14 @@ func exit_the_cave(hero_body):
 		print('there is not target cave to exit: ', hero_id)
 		return
 	rpc("exit_the_cave_helper", hero_id, target_cave)
+
+
+func add_health_posion(hero_id):
+	pass
+
+
+func add_coin(hero_id, content_amount):
+	pass
 
 
 func _get_id_for_hero(hero_body):

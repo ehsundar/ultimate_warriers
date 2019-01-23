@@ -11,6 +11,7 @@ extents = Vector2( 10, 10 )
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
+cave_id = -1
 
 [node name="Area" type="Area2D" parent="." index="0"]
 
