@@ -34,7 +34,7 @@ func _consume_chest(hero_id):
 		if rand_type == 0:
 			MapState.add_health_posion(hero_id)
 		if rand_type == 1:
-			var rand_amount = int(rand_range(10, 80)) + 1
+			var rand_amount = int(rand_range(10, content_amount)) + 1
 			MapState.add_coin(hero_id, rand_amount)
 
 

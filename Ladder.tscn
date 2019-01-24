@@ -1,0 +1,70 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://LadderParent.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 5, 5 )
+
+[sub_resource type="RectangleShape2D" id=3]
+
+custom_solver_bias = 0.0
+extents = Vector2( 5, 5 )
+
+[node name="Ladder" type="Node2D" index="0"]
+
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+ladder_id = -1
+height = 3
+
+[node name="LadderTop" type="Area2D" parent="." index="0"]
+
+editor/display_folded = true
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LadderTop" index="0"]
+
+shape = SubResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="LadderBtm" type="Area2D" parent="." index="1"]
+
+editor/display_folded = true
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LadderBtm" index="0"]
+
+shape = SubResource( 3 )
+_sections_unfolded = [ "Transform" ]
+
+[connection signal="body_entered" from="LadderTop" to="." method="_on_LadderTop_body_entered"]
+
+[connection signal="body_exited" from="LadderTop" to="." method="_on_LadderTop_body_exited"]
+
+[connection signal="body_entered" from="LadderBtm" to="." method="_on_LadderBtm_body_entered"]
+
+[connection signal="body_exited" from="LadderBtm" to="." method="_on_LadderBtm_body_exited"]
+
+

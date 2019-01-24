@@ -1,7 +1,10 @@
 extends CanvasLayer
 
+var count_down = 0
+
+
 func _ready():
-	pass
+	$SpawnCounter.hide()
 
 
 func set_name(text):
@@ -47,5 +50,20 @@ func set_bullet(level):
 		$TextureBullet3.show()
 
 
-func set_coin(value):
-	$CoinValue.text = '$' + str(value)
+func set_coin(value, of_target):
+	$CoinValue.text = '$' + str(value) + '/' + str(of_target)
+	
+
+func show_count_down(seconds):
+	count_down = seconds
+	$SpawnCounter.text = "back in\n" + str(count_down)
+	$SpawnCounter.show()
+	$CountDown.start()
+
+
+func _on_CountDown_timeout():
+	if count_down == 1:
+		$SpawnCounter.hide()
+	count_down -= 1
+	$SpawnCounter.text = "back in\n" + str(count_down)
+	$CountDown.start()

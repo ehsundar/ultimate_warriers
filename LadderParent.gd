@@ -1,7 +1,8 @@
 extends Node2D
 
-export (String) var ladder_name = ""
-signal proximity(ladder_id, body, is_bottom, is_enter)
+export (int) var ladder_id = -1
+export (int) var height = 3
+
 
 var hero_on_ladder = null;
 var hero_on_btm = null;
@@ -9,13 +10,8 @@ var hero_on_top = null;
 
 
 func _ready():
-	$Ladder.connect("body_entered", self, "_on_Ladder_body_entered")
-	$Ladder.connect("body_exited", self, "_on_Ladder_body_exited")
-	$LadderTop.connect("body_entered", self, "_on_LadderTop_body_entered")
-	$LadderTop.connect("body_exited", self, "_on_LadderTop_body_exited")
-	$LadderBtm.connect("body_entered", self, "_on_LadderBtm_body_entered")
-	$LadderBtm.connect("body_exited", self, "_on_LadderBtm_body_exited")
-
+	$LadderTop.position += Vector2(0, -30 * height) + Vector2(0, -20)
+	
 
 func _process(delta):
 	pass
@@ -35,28 +31,14 @@ func _physics_process(delta):
 		if hero_on_btm and jump:
 			hero_on_ladder = hero_on_btm
 			hero_on_ladder.set_delegated_movement(true)
-			var dist = $Ladder/CollisionShape2D.global_position.x - hero_on_ladder.global_position.x
+			var dist = global_position.x - hero_on_ladder.global_position.x
 			hero_on_ladder.global_position += Vector2(dist, -200 * delta)
 				
 		if hero_on_top and crouch:
 			hero_on_ladder = hero_on_top
 			hero_on_ladder.set_delegated_movement(true)
-			var dist = $Ladder/CollisionShape2D.global_position.x - hero_on_ladder.global_position.x
+			var dist = global_position.x - hero_on_ladder.global_position.x
 			hero_on_ladder.global_position += Vector2(dist, 200 * delta)
-
-
-func _on_Ladder_body_entered(body):
-	if body.has_method('hero_body_verify'):
-		# emit_signal("proximity", ladder_name, body, true, true)
-		#hero_on_ladder = body
-		pass
-
-
-func _on_Ladder_body_exited(body):
-	if body.has_method('hero_body_verify'):
-		# emit_signal("proximity", ladder_name, body, true, false)
-		#hero_on_ladder = null
-		pass
 
 
 func _on_LadderTop_body_entered(body):
@@ -71,7 +53,6 @@ func _on_LadderTop_body_entered(body):
 
 func _on_LadderTop_body_exited(body):
 	if body.has_method('hero_body_verify'):
-		#emit_signal("proximity", ladder_name, body, false, false)
 		hero_on_top = null
 
 

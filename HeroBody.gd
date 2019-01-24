@@ -32,6 +32,7 @@ var health = 100
 var hero_killed = true
 var coins = 0
 var posion_count = 0
+var spawn_count_down = 5
 
 var delegated_movement = false;
 var direction = data_types.RIGHT
@@ -41,6 +42,8 @@ slave var slave_position = Vector2();
 
 
 func _ready():
+	$PlayerName.text = hero_name
+	
 	spawn()
 	update()
 	update_player_status('this is ' + hero_name)
@@ -145,6 +148,8 @@ func set_player_name(player_name):
 
 
 func update_animation_state():
+	if not is_network_master():
+		return
 	if health <= 0:
 		set_animation_state("dead")
 		return
@@ -172,13 +177,12 @@ func update_animation_state():
 				set_animation_state("jump_down")
 
 
-sync func set_anim(state):
+sync func set_animation_state_helper(state):
 	current_animation_state = state
 	get_node("AnimatedSprite").play(current_animation_state)
 
 func set_animation_state(state):
-	if current_animation_state != state:
-		rpc("set_anim", state)
+	rpc("set_animation_state_helper", state)
 
 
 func get_bullet():
@@ -193,9 +197,8 @@ func get_bullet():
 		return BulletLarge
 
 
-sync func apply_shoot(pos, dir):
+sync func shoot_helper(pos, dir):
 	last_shoot = OS.get_ticks_msec()
-	set_animation_state("attack")
 	var bullet = get_bullet().instance()
 	bullet.start(pos, dir)
 	get_parent().add_child(bullet)
@@ -207,7 +210,8 @@ func shoot():
 		return
 	if OS.get_ticks_msec() - last_shoot < reload_duration:
 		return
-	rpc("apply_shoot", position, direction)
+	set_animation_state("attack")	
+	rpc("shoot_helper", position, direction)
 
 
 sync func apply_damage(damage):
@@ -226,22 +230,29 @@ sync func apply_kill():
 		return
 	hero_killed = true
 	health = 0
+	
+	$RespawnTimer.wait_time = spawn_count_down
 	$RespawnTimer.start()
 	set_animation_state("dead")
 	update_health_status()
 
 func kill():
+	delegated_movement = false
+	can_shoot = true
+	
+	get_node('/root/world1/GameUi').show_count_down(spawn_count_down)
+	
 	rpc("apply_kill")
 
 
 sync func apply_spawn():
-	$PlayerName.text = hero_name
 	hero_killed = false
 	global_position = spawn_position
 	health = 100
 	update_health_status()
 
 func spawn():
+	can_shoot = true
 	rpc("apply_spawn")
 
 
@@ -273,11 +284,9 @@ func upgrade_health():
 		rpc('add_health', posion_amount)
 
 
-sync func apply_delegated_movement(value):
-	delegated_movement = value
-
 func set_delegated_movement(value):
-	rpc("apply_delegated_movement", value)
+	can_shoot = not value
+	delegated_movement = value
 
 
 func hero_body_verify():
@@ -370,7 +379,10 @@ func update_health_status():
 
 func update_coin_status():
 	if is_network_master():
-		game_state.world.get_node("GameUi").set_coin(coins)
+		var target = 160
+		if bullet_level == 2:
+			target = 200
+		game_state.world.get_node("GameUi").set_coin(coins, target)
 
 
 

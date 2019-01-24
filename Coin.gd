@@ -2,6 +2,13 @@ extends Node2D
 
 export (int) var amount = 10
 export (int) var timeout = 20
+export (int) var tolerance = 5
+
+
+func _calc_timeout():
+	var result = timeout
+	result += rand_range(-tolerance, tolerance)
+	return result
 
 
 func _on_Area2D_body_entered(body):
@@ -10,7 +17,7 @@ func _on_Area2D_body_entered(body):
 		hide()
 		$Area2D/CollisionShape2D.disabled = true
 		
-		$Cooldown.wait_time = timeout
+		$Cooldown.wait_time = _calc_timeout()
 		$Cooldown.start()
 
 

@@ -16,8 +16,7 @@ func start(pos, dir):
 		pos += Vector2(-26, 0)
 	if dir == data_types.RIGHT:
 		velocity = Vector2(1 * speed, 0)
-		pos += Vector2(26, 0)
-		
+		pos += Vector2(26, 0)	
 	position = pos
 
 
@@ -30,8 +29,6 @@ func _physics_process(delta):
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		velocity = velocity.bounce(collision.normal)
-		print(collision.collider)
-			
 		if collision.collider.has_method("hit"):
 			collision.collider.hit(damage)
 			queue_free()
@@ -39,6 +36,5 @@ func _physics_process(delta):
 
 func reduce_damage(value):
 	damage -= value
-	print(damage)
 	if damage <= 0:
 		queue_free()
