@@ -46,3 +46,6 @@ func set_bullet(level):
 		$TextureBullet2.hide()
 		$TextureBullet3.show()
 
+
+func set_coin(value):
+	$CoinValue.text = '$' + str(value)

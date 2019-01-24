@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://tiles_primitives.tres" type="TileSet" id=1]
 [ext_resource path="res://Texture/95983.png" type="Texture" id=2]
@@ -6,14 +6,15 @@
 [ext_resource path="res://LadderParent.gd" type="Script" id=4]
 [ext_resource path="res://Cave.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Chest.tscn" type="PackedScene" id=6]
-[ext_resource path="res://game_info.gd" type="Script" id=7]
-[ext_resource path="res://Fonts/Acme-Regular.tres" type="DynamicFont" id=8]
-[ext_resource path="res://Texture/posion_icon.png" type="Texture" id=9]
-[ext_resource path="res://Texture/bullet_1_icon.png" type="Texture" id=10]
-[ext_resource path="res://Texture/bullet_2_icon.png" type="Texture" id=11]
-[ext_resource path="res://Texture/bullet_3_icon.png" type="Texture" id=12]
-[ext_resource path="res://Texture/heart_icon.png" type="Texture" id=13]
-[ext_resource path="res://Texture/coin_icon.png" type="Texture" id=14]
+[ext_resource path="res://Coin.tscn" type="PackedScene" id=7]
+[ext_resource path="res://game_ui.gd" type="Script" id=8]
+[ext_resource path="res://Fonts/Acme-Regular.tres" type="DynamicFont" id=9]
+[ext_resource path="res://Texture/posion_icon.png" type="Texture" id=10]
+[ext_resource path="res://Texture/bullet_1_icon.png" type="Texture" id=11]
+[ext_resource path="res://Texture/bullet_2_icon.png" type="Texture" id=12]
+[ext_resource path="res://Texture/bullet_3_icon.png" type="Texture" id=13]
+[ext_resource path="res://Texture/heart_icon.png" type="Texture" id=14]
+[ext_resource path="res://Texture/coin_icon.png" type="Texture" id=15]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -459,7 +460,7 @@ position = Vector2( 1260, 155 )
 
 [node name="spanw4" type="Position2D" parent="spawn_points" index="3"]
 
-position = Vector2( 1055, 10 )
+position = Vector2( 1030, 10 )
 
 [node name="boundaries" type="Node2D" parent="." index="4"]
 
@@ -481,6 +482,8 @@ position = Vector2( 785, 475 )
 shape = SubResource( 14 )
 
 [node name="ladders" type="Node2D" parent="." index="5"]
+
+editor/display_folded = true
 
 [node name="Ladder1" type="Node2D" parent="ladders" index="0"]
 
@@ -627,6 +630,7 @@ shape = SubResource( 17 )
 
 [node name="caves" type="Node2D" parent="." index="6"]
 
+editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="Cave" parent="caves" index="0" instance=ExtResource( 5 )]
@@ -646,16 +650,23 @@ editor/display_folded = true
 [node name="Chest" parent="Chests" index="0" instance=ExtResource( 6 )]
 
 position = Vector2( 260, 140 )
+id = 1
+content_type = "coin"
 
-[node name="GameUi" type="CanvasLayer" parent="." index="8"]
+[node name="Coins" type="Node2D" parent="." index="8"]
 
-editor/display_folded = true
+[node name="Coin1" parent="Coins" index="0" instance=ExtResource( 7 )]
+
+position = Vector2( 230, 260 )
+
+[node name="GameUi" type="CanvasLayer" parent="." index="9"]
+
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-script = ExtResource( 7 )
+script = ExtResource( 8 )
 
 [node name="YourName" type="Label" parent="GameUi" index="0"]
 
@@ -671,7 +682,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 4
 size_flags_vertical = 2
-custom_fonts/font = ExtResource( 8 )
+custom_fonts/font = ExtResource( 9 )
 text = "something"
 align = 1
 valign = 1
@@ -722,7 +733,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 stretch_mode = 4
 
 [node name="TexturePosion2" type="TextureRect" parent="GameUi" index="3"]
@@ -740,7 +751,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 stretch_mode = 4
 
 [node name="TexturePosion3" type="TextureRect" parent="GameUi" index="4"]
@@ -758,7 +769,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 stretch_mode = 4
 
 [node name="TextureBullet1" type="TextureRect" parent="GameUi" index="5"]
@@ -776,7 +787,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 10 )
+texture = ExtResource( 11 )
 stretch_mode = 4
 
 [node name="TextureBullet2" type="TextureRect" parent="GameUi" index="6"]
@@ -785,26 +796,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 450.0
-margin_right = 480.0
-margin_bottom = 30.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-texture = ExtResource( 11 )
-stretch_mode = 4
-
-[node name="TextureBullet3" type="TextureRect" parent="GameUi" index="7"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 480.0
-margin_right = 510.0
+margin_left = 420.0
+margin_right = 450.0
 margin_bottom = 30.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -813,6 +806,24 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 texture = ExtResource( 12 )
+stretch_mode = 4
+
+[node name="TextureBullet3" type="TextureRect" parent="GameUi" index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 420.0
+margin_right = 450.0
+margin_bottom = 30.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 13 )
 stretch_mode = 4
 
 [node name="TextureHeart" type="TextureRect" parent="GameUi" index="8"]
@@ -830,7 +841,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 13 )
+texture = ExtResource( 14 )
 stretch_mode = 4
 
 [node name="TextureCoin" type="TextureRect" parent="GameUi" index="9"]
@@ -848,7 +859,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 14 )
+texture = ExtResource( 15 )
 stretch_mode = 4
 
 [node name="CoinValue" type="Label" parent="GameUi" index="10"]
@@ -866,7 +877,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = ExtResource( 8 )
+custom_fonts/font = ExtResource( 9 )
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "124"
 align = 1

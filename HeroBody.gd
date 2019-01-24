@@ -47,6 +47,7 @@ func _ready():
 	update_posion_count()
 	update_bullet_status()
 	update_health_status()
+	update_coin_status()
 
 
 func _process(delta):
@@ -114,6 +115,24 @@ func _physics_process(delta):
 	
 	if health <= 0 and not hero_killed:
 		kill()
+
+
+func _draw():
+	set_as_toplevel(true)
+	if health < 0:
+		health = 0
+	var draw_bar_x = -15
+	var draw_bar_y = -30
+	draw_rect(Rect2(draw_bar_x, draw_bar_y, 30, 3), Color(1.0, 0.0, 0.0), false)
+	draw_rect(Rect2(draw_bar_x, draw_bar_y, health * 3 / 10, 3), Color(1.0, 0.0, 0.0), true)
+	
+	
+	var time_rem = (OS.get_ticks_msec() - last_shoot) * 30 / reload_duration
+	if time_rem > 30:
+		time_rem = 30
+	draw_bar_y += 5
+	draw_rect(Rect2(draw_bar_x, draw_bar_y, 30, 3), Color(0.0, 1.0, 0.0), false)
+	draw_rect(Rect2(draw_bar_x, draw_bar_y, time_rem, 3), Color(0.0, 1.0, 0.0), true)
 
 
 sync func set_direction(dir):
@@ -202,24 +221,6 @@ func hit(damage):
 	rpc("apply_damage", damage)
 
 
-func _draw():
-	set_as_toplevel(true)
-	if health < 0:
-		health = 0
-	var draw_bar_x = -15
-	var draw_bar_y = -30
-	draw_rect(Rect2(draw_bar_x, draw_bar_y, 30, 3), Color(1.0, 0.0, 0.0), false)
-	draw_rect(Rect2(draw_bar_x, draw_bar_y, health * 3 / 10, 3), Color(1.0, 0.0, 0.0), true)
-	
-	
-	var time_rem = (OS.get_ticks_msec() - last_shoot) * 30 / reload_duration
-	if time_rem > 30:
-		time_rem = 30
-	draw_bar_y += 5
-	draw_rect(Rect2(draw_bar_x, draw_bar_y, 30, 3), Color(0.0, 1.0, 0.0), false)
-	draw_rect(Rect2(draw_bar_x, draw_bar_y, time_rem, 3), Color(0.0, 1.0, 0.0), true)
-
-
 sync func apply_kill():
 	if hero_killed:
 		return
@@ -238,6 +239,7 @@ sync func apply_spawn():
 	hero_killed = false
 	global_position = spawn_position
 	health = 100
+	update_health_status()
 
 func spawn():
 	rpc("apply_spawn")
@@ -248,8 +250,19 @@ sync func upgrade_bullet_helper(value):
 
 func upgrade_bullet():
 	if bullet_level < 3:
+		if bullet_level == 1:
+			if coins >= 160:
+				coins -= 160
+			else:
+				return
+		if bullet_level == 2:
+			if coins >= 200:
+				coins -= 200
+			else:
+				return
 		bullet_level += 1
 		update_bullet_status()
+		update_coin_status()
 		rpc("upgrade_bullet_helper", bullet_level)
 
 
@@ -268,9 +281,6 @@ func set_delegated_movement(value):
 
 
 func hero_body_verify():
-	"""
-	this method created just to be checked by has_method() method
-	"""
 	pass
 
 
@@ -333,6 +343,11 @@ sync func add_health(amount):
 	update_health_status()
 
 
+func add_coin(amount):
+	coins += amount
+	update_coin_status()
+
+
 func update_player_status(text):
 	if is_network_master():
 		game_state.world.get_node("GameUi").set_name(text)
@@ -351,6 +366,11 @@ func update_bullet_status():
 func update_health_status():
 	if is_network_master():
 		game_state.world.get_node("GameUi").set_health(health)
+
+
+func update_coin_status():
+	if is_network_master():
+		game_state.world.get_node("GameUi").set_coin(coins)
 
 
 

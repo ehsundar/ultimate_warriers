@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://game_info.gd" type="Script" id=1]
+[ext_resource path="res://game_ui.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/Acme-Regular.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Texture/posion_icon.png" type="Texture" id=3]
 [ext_resource path="res://Texture/bullet_1_icon.png" type="Texture" id=4]
@@ -9,9 +9,8 @@
 [ext_resource path="res://Texture/heart_icon.png" type="Texture" id=7]
 [ext_resource path="res://Texture/coin_icon.png" type="Texture" id=8]
 
-[node name="GameUi" type="CanvasLayer"]
+[node name="GameUi" type="CanvasLayer" index="0"]
 
-editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0

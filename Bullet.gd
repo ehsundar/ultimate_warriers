@@ -4,8 +4,11 @@ export (int) var damage = 20
 export (int) var speed = 750
 export (int) var max_range = 400
 export (int) var reload_duration = 1000
+export (int) var upgrade_cost = 0
+
 var velocity = Vector2()
 var total_movement = 0
+
 
 func start(pos, dir):
 	if dir == data_types.LEFT:
@@ -16,6 +19,7 @@ func start(pos, dir):
 		pos += Vector2(26, 0)
 		
 	position = pos
+
 
 func _physics_process(delta):
 	if total_movement > max_range:
@@ -31,6 +35,7 @@ func _physics_process(delta):
 		if collision.collider.has_method("hit"):
 			collision.collider.hit(damage)
 			queue_free()
+
 
 func reduce_damage(value):
 	damage -= value

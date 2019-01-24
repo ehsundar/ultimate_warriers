@@ -19,6 +19,7 @@ damage = 30
 speed = 600
 max_range = 500
 reload_duration = 1500
+upgrade_cost = 160
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 

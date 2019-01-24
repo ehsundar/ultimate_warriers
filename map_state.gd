@@ -108,7 +108,7 @@ func add_health_posion(hero_id):
 
 func add_coin(hero_id, content_amount):
 	# rpc('add_coin_helper', hero_id, content_amount)
-	heros[hero_id].coins += content_amount
+	heros[hero_id].add_coin(content_amount)
 	print('player ' + str(hero_id) + ' got a posion')
 
 
