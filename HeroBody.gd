@@ -33,6 +33,7 @@ var hero_killed = true
 var coins = 0
 var posion_count = 0
 var spawn_count_down = 5
+var team = 'unknown'
 
 var delegated_movement = false;
 var direction = data_types.RIGHT
@@ -42,7 +43,12 @@ slave var slave_position = Vector2();
 
 
 func _ready():
-	$PlayerName.text = hero_name
+	$PlayerNameRed.text = hero_name
+	$PlayerNameBlue.text = hero_name
+	if team == 'red':
+		$PlayerNameBlue.hide()
+	if team == 'blue':
+		$PlayerNameRed.hide()
 	
 	spawn()
 	update()
@@ -237,11 +243,13 @@ sync func apply_kill():
 	update_health_status()
 
 func kill():
+	if hero_killed:
+		return
 	delegated_movement = false
 	can_shoot = true
 	
-	get_node('/root/world1/GameUi').show_count_down(spawn_count_down)
-	
+	if is_network_master():
+		game_state.world.get_node('GameUi').show_count_down(spawn_count_down)
 	rpc("apply_kill")
 
 

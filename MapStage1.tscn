@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://tiles_primitives.tres" type="TileSet" id=1]
 [ext_resource path="res://Texture/95983.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Chest.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Coin.tscn" type="PackedScene" id=7]
 [ext_resource path="res://GameUi.tscn" type="PackedScene" id=8]
+[ext_resource path="res://SuitCase.tscn" type="PackedScene" id=9]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -575,6 +576,15 @@ position = Vector2( 680, 110 )
 tolerance = 5
 
 [node name="GameUi" parent="." index="9" instance=ExtResource( 8 )]
+
+[node name="SuitCaseBlue" parent="." index="10" instance=ExtResource( 9 )]
+
+position = Vector2( 230, 140 )
+team = "blue"
+
+[node name="SuitCaseRed" parent="." index="11" instance=ExtResource( 9 )]
+
+position = Vector2( 550, 410 )
 
 [connection signal="body_entered" from="boundaries/boundary_lower" to="players" method="_on_boundary_lower_body_entered"]
 

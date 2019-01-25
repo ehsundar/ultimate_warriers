@@ -68,7 +68,8 @@ func _on_game_error(errtxt):
 
 func refresh_lobby():
 	get_node("players/connected_players").clear()
-	get_node("players/connected_players").add_item(game_state.get_player_name() + " (You)")
+	get_node("players/connected_players").add_item(
+		game_state.get_player_name() + " (You)")
 	
 	var players = game_state.get_player_list()
 	players.sort()
