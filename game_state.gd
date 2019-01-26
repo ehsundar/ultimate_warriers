@@ -104,7 +104,7 @@ remote func pre_start_game(spawn_points, player_teams):
 			player.hero_name = players[player_id]
 			player.get_node("Camera2D").queue_free()
 
-		world.get_node("players").add_child(player)
+		world.get_node("Players").add_child(player)
 		MapState.register_hero(player_id, player)
 
 #	for p_id in spawn_points:
@@ -277,9 +277,11 @@ func _generate_random_teams():
 
 func _get_spawn_position(number):
 	assert(world != null)
-	var spawn_name = "spawn_points/spawn" + str(number)
+	var spawn_name = "SpawnPoints/Spawn" + str(number)
 	return world.get_node(spawn_name).position
 
 
-
+func team_won(team):
+	world.get_node('GameUi').team_win(team)
+	get_tree().set_pause(true)
 

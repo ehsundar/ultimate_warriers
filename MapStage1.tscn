@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://tiles_primitives.tres" type="TileSet" id=1]
 [ext_resource path="res://Texture/95983.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Coin.tscn" type="PackedScene" id=7]
 [ext_resource path="res://GameUi.tscn" type="PackedScene" id=8]
 [ext_resource path="res://SuitCase.tscn" type="PackedScene" id=9]
+[ext_resource path="res://GameExit.tscn" type="PackedScene" id=10]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -359,11 +360,11 @@ _sections_unfolded = [ "9", "Resource" ]
 custom_solver_bias = 0.0
 extents = Vector2( 785, 5 )
 
-[node name="world1" type="Node2D"]
+[node name="world1" type="Node2D" index="0"]
 
 _sections_unfolded = [ "Transform" ]
 
-[node name="map_hills" type="TileMap" parent="." index="0"]
+[node name="MapHills" type="TileMap" parent="." index="0"]
 
 mode = 0
 tile_set = ExtResource( 1 )
@@ -387,7 +388,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="map_sky" type="TileMap" parent="." index="1"]
+[node name="MapSky" type="TileMap" parent="." index="1"]
 
 z_index = -7
 mode = 0
@@ -412,35 +413,35 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="players" type="Node2D" parent="." index="2"]
+[node name="Players" type="Node2D" parent="." index="2"]
 
 script = ExtResource( 3 )
 
-[node name="spawn_points" type="Node2D" parent="." index="3"]
+[node name="SpawnPoints" type="Node2D" parent="." index="3"]
 
 editor/display_folded = true
 
-[node name="spawn1" type="Position2D" parent="spawn_points" index="0"]
+[node name="Spawn1" type="Position2D" parent="SpawnPoints" index="0"]
 
 position = Vector2( 90, 90 )
 
-[node name="spawn2" type="Position2D" parent="spawn_points" index="1"]
+[node name="Spawn2" type="Position2D" parent="SpawnPoints" index="1"]
 
 position = Vector2( 100, 295 )
 
-[node name="spawn3" type="Position2D" parent="spawn_points" index="2"]
+[node name="Spawn3" type="Position2D" parent="SpawnPoints" index="2"]
 
 position = Vector2( 1245, 165 )
 
-[node name="spanw4" type="Position2D" parent="spawn_points" index="3"]
+[node name="Spanw4" type="Position2D" parent="SpawnPoints" index="3"]
 
 position = Vector2( 1030, 10 )
 
-[node name="boundaries" type="Node2D" parent="." index="4"]
+[node name="Borders" type="Node2D" parent="." index="4"]
 
 editor/display_folded = true
 
-[node name="boundary_lower" type="Area2D" parent="boundaries" index="0"]
+[node name="boundary_lower" type="Area2D" parent="Borders" index="0"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -450,49 +451,49 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="boundaries/boundary_lower" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/boundary_lower" index="0"]
 
 position = Vector2( 785, 475 )
 shape = SubResource( 14 )
 
-[node name="ladders" type="Node2D" parent="." index="5"]
+[node name="Ladders" type="Node2D" parent="." index="5"]
 
 editor/display_folded = true
 
-[node name="Ladder1" parent="ladders" index="0" instance=ExtResource( 4 )]
+[node name="Ladder1" parent="Ladders" index="0" instance=ExtResource( 4 )]
 
 position = Vector2( 285, 355 )
 ladder_id = 1
 
-[node name="Ladder2" parent="ladders" index="1" instance=ExtResource( 4 )]
+[node name="Ladder2" parent="Ladders" index="1" instance=ExtResource( 4 )]
 
 position = Vector2( 135, 355 )
 ladder_id = 2
 height = 7
 
-[node name="Ladder3" parent="ladders" index="2" instance=ExtResource( 4 )]
+[node name="Ladder3" parent="Ladders" index="2" instance=ExtResource( 4 )]
 
 position = Vector2( 645, 415 )
 ladder_id = 3
 height = 6
 
-[node name="Ladder4" parent="ladders" index="3" instance=ExtResource( 4 )]
+[node name="Ladder4" parent="Ladders" index="3" instance=ExtResource( 4 )]
 
 position = Vector2( 1245, 205 )
 ladder_id = 3
 height = 7
 
-[node name="caves" type="Node2D" parent="." index="6"]
+[node name="Caves" type="Node2D" parent="." index="6"]
 
 editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
 
-[node name="Cave" parent="caves" index="0" instance=ExtResource( 5 )]
+[node name="Cave" parent="Caves" index="0" instance=ExtResource( 5 )]
 
 position = Vector2( 720, 230 )
 cave_id = 1
 
-[node name="Cave2" parent="caves" index="1" instance=ExtResource( 5 )]
+[node name="Cave2" parent="Caves" index="1" instance=ExtResource( 5 )]
 
 position = Vector2( 390, 260 )
 cave_id = 2
@@ -586,6 +587,10 @@ team = "blue"
 
 position = Vector2( 550, 410 )
 
-[connection signal="body_entered" from="boundaries/boundary_lower" to="players" method="_on_boundary_lower_body_entered"]
+[node name="GameExit" parent="." index="12" instance=ExtResource( 10 )]
+
+position = Vector2( 210, 340 )
+
+[connection signal="body_entered" from="Borders/boundary_lower" to="Players" method="_on_boundary_lower_body_entered"]
 
 

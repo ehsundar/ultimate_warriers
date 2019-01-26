@@ -10,6 +10,8 @@ var master_hero = null;
 
 var chests = {} # chest_id: chest_tree
 
+var case_holders = {}
+
 
 func register_cave(cave):
 	assert(not cave in caves.values())
@@ -32,6 +34,11 @@ func register_chest(chest):
 	assert(not chest in chests.values())
 	assert(not chest.id in chests.keys())
 	chests[chest.id] = chest
+
+
+func register_case(suitcase):
+	assert(not suitcase in case_holders)
+	case_holders[suitcase] = null
 
 
 func enter_cave_area(cave, hero_body):
@@ -110,6 +117,30 @@ func add_coin(hero_id, content_amount):
 	# rpc('add_coin_helper', hero_id, content_amount)
 	heros[hero_id].add_coin(content_amount)
 	print('player ' + str(hero_id) + ' got a posion')
+
+
+func set_case_holder(suitcase, hero_body):
+	assert(suitcase in case_holders)
+	assert(hero_body in heros.values())
+	
+	if suitcase.team == hero_body.team:
+		return false
+	
+	if case_holders[suitcase] == null:
+		case_holders[suitcase] = hero_body
+		return true
+	else:
+		return false
+
+
+func clear_case_holder(suitcase):
+	assert(suitcase in case_holders)
+	case_holders[suitcase] = null	
+
+
+func is_case_holder(hero_body):
+	assert(hero_body in heros.values())
+	return hero_body in case_holders.values()
 
 
 func _get_id_for_hero(hero_body):

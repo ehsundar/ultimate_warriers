@@ -5,6 +5,7 @@ var count_down = 0
 
 func _ready():
 	$SpawnCounter.hide()
+	$TeamWon.hide()
 
 
 func set_name(text):
@@ -67,3 +68,12 @@ func _on_CountDown_timeout():
 	count_down -= 1
 	$SpawnCounter.text = "back in\n" + str(count_down)
 	$CountDown.start()
+
+
+func team_win(team):
+	$TeamWon.show()
+	$TeamWon.text = 'TEAM ' + team.to_upper() + '\nWON!'
+
+
+
+

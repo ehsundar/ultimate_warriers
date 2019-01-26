@@ -214,6 +214,8 @@ sync func shoot_helper(pos, dir):
 func shoot():
 	if not can_shoot:
 		return
+	if MapState.is_case_holder(self):
+		return
 	if OS.get_ticks_msec() - last_shoot < reload_duration:
 		return
 	set_animation_state("attack")	
@@ -310,7 +312,11 @@ func apply_enter_cave(cave):
 	in_cave = true
 
 func enter_cave(cave):
+	if MapState.is_case_holder(self):
+		return
 	# rpc("apply_enter_cave", cave)
+	if is_network_master():
+		$CaveHitTimer.start()
 	apply_enter_cave(cave)
 	
 
@@ -323,6 +329,8 @@ func apply_exit_cave(cave):
 
 func exit_cave(cave):
 	# rpc("apply_exit_cave", cave)
+	if is_network_master():
+		$CaveHitTimer.stop()
 	apply_exit_cave(cave)
 
 
@@ -393,8 +401,5 @@ func update_coin_status():
 		game_state.world.get_node("GameUi").set_coin(coins, target)
 
 
-
-
-
-
-
+func _on_CaveHitTimer_timeout():
+	hit($CaveHitTimer.wait_time)
