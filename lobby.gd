@@ -1,11 +1,11 @@
 extends Control
 
 func _ready():
-	game_state.connect("connection_failed", self, "_on_connection_failed")
-	game_state.connect("connection_succeeded", self, "_on_connection_success")
-	game_state.connect("player_list_changed", self, "refresh_lobby")
-	game_state.connect("game_ended", self, "_on_game_ended")
-	game_state.connect("game_error", self, "_on_game_error")
+	GameState.connect("connection_failed", self, "_on_connection_failed")
+	GameState.connect("connection_succeeded", self, "_on_connection_success")
+	GameState.connect("player_list_changed", self, "refresh_lobby")
+	GameState.connect("game_ended", self, "_on_game_ended")
+	GameState.connect("game_error", self, "_on_game_error")
 
 
 func _on_button_host_pressed():
@@ -18,7 +18,7 @@ func _on_button_host_pressed():
 	get_node("connect").hide()
 	get_node("players").show()
 	
-	game_state.host_game(player_name)
+	GameState.host_game(player_name)
 	refresh_lobby()
 
 
@@ -37,7 +37,7 @@ func _on_button_join_pressed():
 	get_node("connect/button_join").disabled = true
 	get_node("connect/button_host").disabled = true
 	
-	game_state.join_game(ip, player_name)
+	GameState.join_game(ip, player_name)
 	
 
 func _on_connection_success():
@@ -69,9 +69,9 @@ func _on_game_error(errtxt):
 func refresh_lobby():
 	get_node("players/connected_players").clear()
 	get_node("players/connected_players").add_item(
-		game_state.get_player_name() + " (You)")
+		GameState.get_player_name() + " (You)")
 	
-	var players = game_state.get_player_list()
+	var players = GameState.get_player_list()
 	players.sort()
 	for player in players:
 		get_node("players/connected_players").add_item(player)
@@ -81,4 +81,4 @@ func refresh_lobby():
 
 
 func _on_button_start_pressed():
-	game_state.begin_game()
+	GameState.begin_game()

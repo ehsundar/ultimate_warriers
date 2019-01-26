@@ -1,20 +1,12 @@
 extends Node
 
-# Default game port
 const DEFAULT_PORT = 10567
-
-# Max number of players
 const MAX_PEERS = 4
 
-# Name for my player
 var player_name = "The Warrior"
-
-# Names for remote players in id:name format
 var players = {}
-
 var world = null
 
-# Signals to let lobby GUI know what's going on
 signal player_list_changed()
 signal connection_failed()
 signal connection_succeeded()
@@ -43,8 +35,7 @@ func _player_disconnected(id):
 		if has_node("/root/world1"): # Game is in progress
 			emit_signal("game_error", "Player " + players[id] + " disconnected")
 			end_game()
-		else: # Game is not in progress
-			# If we are the server, send to the new dude all the already registered players
+		else:
 			unregister_player(id)
 			for p_id in players:
 				# Erase in the server
@@ -107,35 +98,6 @@ remote func pre_start_game(spawn_points, player_teams):
 		world.get_node("Players").add_child(player)
 		MapState.register_hero(player_id, player)
 
-#	for p_id in spawn_points:
-#		var spawn_name = "spawn_points/spawn" + str(spawn_points[p_id])
-#		var spawn_pos = world.get_node(spawn_name).position
-#		var player = player_scene.instance()
-#
-#		player.hero_name = (str(p_id)) # Use unique ID as node name
-#		player.spawn_position = spawn_pos
-#		player.set_network_master(p_id) #set unique id as master
-#
-#		if p_id == get_tree().get_network_unique_id():
-#			# If node for this peer id, set name
-#			#player.set_player_name(player_name)
-#			player.hero_name = player_name
-#			#MapState.master_hero = player
-#		else:
-#			# Otherwise set name from peer
-#			#player.set_player_name(players[p_id])
-#			player.hero_name = players[p_id]
-#			player.get_node("Camera2D").queue_free()
-#
-#		world.get_node("players").add_child(player)
-#		MapState.register_hero(p_id, player)
-
-	# TODO
-	# Set up score
-	#world.get_node("score").add_player(get_tree().get_network_unique_id(), player_name)
-	#for pn in players:
-	#	world.get_node("score").add_player(pn, players[pn])
-
 	if not get_tree().is_network_server():
 		# Tell server we are ready to start
 		rpc_id(1, "ready_to_start", get_tree().get_network_unique_id())
@@ -189,8 +151,6 @@ func begin_game():
 		
 	player_teams[1] = teams_in_order[tmp]
 
-	# Create a dictionary with peer id and respective spawn points
-	# could be improved by randomizing
 	var blue_points = [1, 2]
 	var red_points = [3, 4]
 	var spawn_points = {}
@@ -205,13 +165,7 @@ func begin_game():
 			spawn_points[p] = red_points.pop_front()
 		if player_teams[p] == 'blue':
 			spawn_points[p] = blue_points.pop_front()
-	
-#	spawn_points[1] = 1 # Server in spawn point 1
-#	var spawn_point_idx = 2
-#	for p in players:
-#		spawn_points[p] = spawn_point_idx
-#		spawn_point_idx += 1
-	# Call to pre-start game with the spawn points
+
 	for p in players:
 		rpc_id(p, "pre_start_game", spawn_points, player_teams)
 	pre_start_game(spawn_points, player_teams)

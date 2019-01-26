@@ -16,9 +16,9 @@ config/icon="res://game_icon.png"
 
 [autoload]
 
-game_state="*res://game_state.gd"
-data_types="*res://data_types.gd"
-MapState="*res://map_state.gd"
+GameState="*res://GameState.gd"
+MapState="*res://MapState.gd"
+Constants="*res://Constants.gd"
 
 [display]
 

@@ -36,7 +36,7 @@ var spawn_count_down = 5
 var team = 'unknown'
 
 var delegated_movement = false;
-var direction = data_types.RIGHT
+var direction = Constants.RIGHT
 
 slave var slave_velocity = Vector2();
 slave var slave_position = Vector2();
@@ -52,7 +52,7 @@ func _ready():
 	
 	spawn()
 	update()
-	update_player_status('this is ' + hero_name)
+	update_player_status(hero_name)
 	update_posion_count()
 	update_bullet_status()
 	update_health_status()
@@ -97,12 +97,12 @@ func _physics_process(delta):
 				
 			if right:
 				velocity.x += run_speed
-				if direction != data_types.RIGHT:
-					rpc("set_direction", data_types.RIGHT)
+				if direction != Constants.RIGHT:
+					rpc("set_direction", Constants.RIGHT)
 			if left:
 				velocity.x -= run_speed
-				if direction != data_types.LEFT:
-					rpc("set_direction", data_types.LEFT)
+				if direction != Constants.LEFT:
+					rpc("set_direction", Constants.LEFT)
 			
 			velocity.y += gravity * delta
 			velocity = move_and_slide(velocity, Vector2(0, -1))
@@ -167,14 +167,14 @@ func update_animation_state():
 		if is_on_floor():
 			if OS.get_ticks_msec() - last_shoot > 500:
 				if velocity.length() == 0:
-					if direction == data_types.RIGHT:
+					if direction == Constants.RIGHT:
 						set_animation_state("stand")
-					if direction == data_types.LEFT:
+					if direction == Constants.LEFT:
 						set_animation_state("stand_left")
 				else:
-					if direction == data_types.RIGHT:
+					if direction == Constants.RIGHT:
 						set_animation_state("walk")
-					if direction == data_types.LEFT:
+					if direction == Constants.LEFT:
 						set_animation_state("walk_left")
 		else:
 			if velocity.y < 0:
@@ -230,7 +230,8 @@ sync func apply_damage(damage):
 	update_health_status()
 
 func hit(damage):
-	rpc("apply_damage", damage)
+	if is_network_master():
+		rpc("apply_damage", damage)
 
 
 sync func apply_kill():
@@ -251,7 +252,7 @@ func kill():
 	can_shoot = true
 	
 	if is_network_master():
-		game_state.world.get_node('GameUi').show_count_down(spawn_count_down)
+		GameState.world.get_node('GameUi').show_count_down(spawn_count_down)
 	rpc("apply_kill")
 
 
@@ -375,22 +376,22 @@ func add_coin(amount):
 
 func update_player_status(text):
 	if is_network_master():
-		game_state.world.get_node("GameUi").set_name(text)
+		GameState.world.get_node("GameUi").set_name(text)
 
 
 func update_posion_count():
 	if is_network_master():
-		game_state.world.get_node("GameUi").set_posion_count(posion_count)
+		GameState.world.get_node("GameUi").set_posion_count(posion_count)
 
 
 func update_bullet_status():
 	if is_network_master():
-		game_state.world.get_node("GameUi").set_bullet(bullet_level)
+		GameState.world.get_node("GameUi").set_bullet(bullet_level)
 
 
 func update_health_status():
 	if is_network_master():
-		game_state.world.get_node("GameUi").set_health(health)
+		GameState.world.get_node("GameUi").set_health(health)
 
 
 func update_coin_status():
@@ -398,7 +399,7 @@ func update_coin_status():
 		var target = 160
 		if bullet_level == 2:
 			target = 200
-		game_state.world.get_node("GameUi").set_coin(coins, target)
+		GameState.world.get_node("GameUi").set_coin(coins, target)
 
 
 func _on_CaveHitTimer_timeout():

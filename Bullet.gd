@@ -11,10 +11,10 @@ var total_movement = 0
 
 
 func start(pos, dir):
-	if dir == data_types.LEFT:
+	if dir == Constants.LEFT:
 		velocity = Vector2(-1 * speed, 0)
 		pos += Vector2(-26, 0)
-	if dir == data_types.RIGHT:
+	if dir == Constants.RIGHT:
 		velocity = Vector2(1 * speed, 0)
 		pos += Vector2(26, 0)	
 	position = pos
