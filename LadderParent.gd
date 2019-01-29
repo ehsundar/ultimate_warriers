@@ -10,7 +10,7 @@ var hero_on_top = null;
 
 
 func _ready():
-	$LadderTop.position += Vector2(0, -30 * height) + Vector2(0, -20)
+	$LadderTop.position += Vector2(0, -30 * height) + Vector2(0, -15)
 	
 
 func _process(delta):
