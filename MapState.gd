@@ -25,6 +25,7 @@ func register_cave(cave):
 
 func register_hero(hero_id, hero_body):
 	print(hero_body.hero_name, ': ', hero_id)
+	print(hero_body.spawn_position)
 	heros[hero_id] = hero_body
 	if hero_body.is_network_master():
 		master_hero = hero_body
