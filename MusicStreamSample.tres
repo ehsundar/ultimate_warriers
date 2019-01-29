@@ -1,0 +1,12 @@
+[gd_resource type="AudioStreamSample" format=2]
+
+[resource]
+
+format = 1
+loop_mode = 0
+loop_begin = 0
+loop_end = 0
+mix_rate = 44100
+stereo = true
+data = PoolByteArray(  )
+
